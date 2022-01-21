@@ -1,0 +1,36 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe Aktive Datei kompilieren",
+            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${fileDirname}\\**.cpp",
+                "${fileDirname}\\core\\vec3D.h",
+                "${fileDirname}\\core\\vec3D.cpp",
+                "${fileDirname}\\core\\convSys.h",
+                "${fileDirname}\\core\\convSys.cpp",
+                "${fileDirname}\\core\\body.h",
+                "${fileDirname}\\core\\body.cpp",
+                // "${fileDirname}\\core\\solver.h",
+                // "${fileDirname}\\core\\solver.cpp",
+                "-o",
+                "${fileDirname}\\bins\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Vom Debugger generierte Aufgabe."
+        }
+    ],
+    "version": "2.0.0"
+}

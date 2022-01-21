@@ -1,0 +1,18 @@
+{
+    "editor.formatOnSave": true,
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "*.Rmd": "markdown",
+        "ratio": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "alignedvector3": "cpp",
+        "complex": "cpp",
+        "stdexcept": "cpp",
+        "cmath": "cpp",
+        "dense": "cpp",
+        "fft": "cpp",
+        "iosfwd": "cpp",
+        "vector": "cpp"
+    }
+}
