@@ -8,10 +8,8 @@
 //#include "core/Body.h"
 #include "core/convSys.h"
 #include "core/vec3D.h"
-#include "eigen-3.4.0/Eigen/Dense"
 
 using namespace std;
-using namespace Eigen;
 
 /*
 class convSys {
