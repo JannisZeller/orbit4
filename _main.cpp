@@ -1,3 +1,4 @@
+// Main CPP-File for creating orbital simulations of multibody systems.
 #include <math.h>
 
 #include <fstream>
