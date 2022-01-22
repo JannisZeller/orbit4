@@ -12,7 +12,7 @@ class solver {
     static void test_solver(double x, DoubleCall f);
 
     // Runge-Kutta 4th Order functional:
-    static void runge_kutta_4(double x)
+    static void runge_kutta_4(double x, DoubleCall f);
 };
 
 #endif
