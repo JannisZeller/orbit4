@@ -8,6 +8,7 @@
 
 //#include "core/Body.h"
 #include "core/convSys.h"
+#include "core/solver.h"
 #include "core/vec3D.h"
 
 using namespace std;
@@ -404,44 +405,61 @@ void test(vector<Body> bodyVec) {
 
 */
 
+/*
+typedef double (*vFunctionCall)(int args);
+void test_solver(double x, vFunctionCall f) {
+    double x1 = x;
+    double y = f(x);
+    std::cout << y << std::endl;
+}
+*/
+
+double test(double x) {
+    return 2. * x;
+}
+
 int main() {
+    // Testing solver class:
+    cout << "Testing solver Class" << endl;
+    solver::test_solver(6., (DoubleCall)test);
+
     // Testing vec3D class:
-    vec3D v0;
-    cout << "Default constructor of vec3D" << endl;
-    cout << v0 << endl;
-    vec3D v1(1., 2., 3.);
-    vec3D v2(-1., -2., -3.);
+    // vec3D v0;
+    // cout << "Default constructor of vec3D" << endl;
+    // cout << v0 << endl;
+    // vec3D v1(1., 2., 3.);
+    // vec3D v2(-1., -2., -3.);
 
-    cout << "Summation" << endl;
-    cout << v1 + v2 << 3. + v1 << v1 + 3. << endl;
+    // cout << "Summation" << endl;
+    // cout << v1 + v2 << 3. + v1 << v1 + 3. << endl;
 
-    cout << "Substraction" << endl;
-    cout << v1 - v2 << 3 - v1 << v1 - 3 << endl;
+    // cout << "Substraction" << endl;
+    // cout << v1 - v2 << 3 - v1 << v1 - 3 << endl;
 
-    cout << "Elementwise / Scalar Multiplication" << endl;
-    cout << v1 * v2 << 3 * v1 << v1 * 3 << endl;
+    // cout << "Elementwise / Scalar Multiplication" << endl;
+    // cout << v1 * v2 << 3 * v1 << v1 * 3 << endl;
 
-    cout << "Dot product" << endl;
-    cout << v1.dot(v2) << endl;
+    // cout << "Dot product" << endl;
+    // cout << v1.dot(v2) << endl;
 
-    cout << "Elementwise / Scalar Division" << endl;
-    cout << v1 / v2 << 3 / v1 << v1 / 3 << endl;
+    // cout << "Elementwise / Scalar Division" << endl;
+    // cout << v1 / v2 << 3 / v1 << v1 / 3 << endl;
 
-    cout << "Combination 3+v1+v1-4" << endl;
-    cout << 3 + v1 + v1 - 4 << endl;
+    // cout << "Combination 3+v1+v1-4" << endl;
+    // cout << 3 + v1 + v1 - 4 << endl;
 
-    cout << "Combination 3*v1/4+1" << endl;
-    cout << 3 * v1 / 4 + 1 << endl;
+    // cout << "Combination 3*v1/4+1" << endl;
+    // cout << 3 * v1 / 4 + 1 << endl;
 
-    cout << "Paranthesis" << endl;
-    cout << 3 * (v1 + v2 + 1) << endl;
+    // cout << "Paranthesis" << endl;
+    // cout << 3 * (v1 + v2 + 1) << endl;
 
-    cout << "ConvSys testing" << endl;
-    double x = 1.;
-    cout << convSys<double>::lenConv(x) << endl;
-    cout << convSys<vec3D>::lenConv(v1) << endl;
-    cout << convSys<vec3D>::velConv(v1) << endl;
-    cout << convSys<double>::massConv(2000000000000) << endl;
+    // cout << "ConvSys testing" << endl;
+    // double x = 1.;
+    // cout << convSys<double>::lenConv(x) << endl;
+    // cout << convSys<vec3D>::lenConv(v1) << endl;
+    // cout << convSys<vec3D>::velConv(v1) << endl;
+    // cout << convSys<double>::massConv(2000000000000) << endl;
 
     /*
     const double NYear = 5.;
@@ -547,7 +565,7 @@ int main() {
     Body::print_bodies();
     */
 
-    cout << "Press any key to close the application." << endl;
+    cout << "Press any key to close the application. Ver. 0.0002" << endl;
     cin.ignore();
     return 0;
 }

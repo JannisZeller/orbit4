@@ -1,16 +1,18 @@
 #ifndef SOLVER
 #define SOLVER
 
+#include "vec3D.h"
+
+typedef double (*DoubleCall)(int args);
+typedef vec3D (*Vec3DCall)(int args);
+
 class solver {
    public:
-    // Conversion of length units
-    static T lenConv(const T X);
+    // Test functional:
+    static void test_solver(double x, DoubleCall f);
 
-    // Conversion of velocities
-    static T velConv(const T V);
-
-    // Conversion of mass
-    static double massConv(const double Mass);
+    // Runge-Kutta 4th Order functional:
+    static void runge_kutta_4(double x)
 };
 
 #endif
