@@ -15,6 +15,8 @@ typedef vec3D (*Vec3DCall)(vec3D args);
 // The classical Runge-Kutta method can be found in standard textbooks on numerical
 // methods for ODEs. Also e.g. under https://www.spektrum.de/lexikon/mathematik/runge-kutta-methode/8698.
 
+// Be careful, the returns are updated velocities, not updated positions already!
+
 class solver {
    public:
     // Test functional:
@@ -24,10 +26,10 @@ class solver {
     static vec3D runge_kutta_4(vec3D x, double dt, Vec3DCall f);
 
     // Runge-Kutta-Fehlberg 5-th order method (Fehlberg, 1969, p. 12)
-    static vec3D solver::runge_kutta_fehlberg1(vec3D x, double dt, Vec3DCall f);
+    static vec3D runge_kutta_fehlberg1(vec3D x, double dt, Vec3DCall f);
 
     // Runge-Kutta-Fehlberg 5-th order method with coefficients from D. Sarafyan
-    static vec3D solver::runge_kutta_fehlberg2(vec3D x, double dt, Vec3DCall f);
+    static vec3D runge_kutta_fehlberg2(vec3D x, double dt, Vec3DCall f);
 };
 
 #endif

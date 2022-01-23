@@ -418,13 +418,25 @@ double test(double x) {
     return 2. * x;
 }
 
+// Only works, when input vector is of type (x1, 0, 0)
+vec3D harmomic_potential(vec3D x) {
+    double D = 1.;
+    vec3D ret = -D * x.norm() * x;
+    return (ret);
+}
+
 int main() {
     // Testing solver class:
     cout << "Testing solver Class" << endl;
     solver::test_solver(6., (DoubleCall)test);
 
     cout << "Testing solver Class with harmonic oscillator" << endl;
-
+    double dt = 0.01;
+    vec3D x0(1., 0., 0.);
+    vec3D v0(0., 0., 0.);
+    vec3D vNew = solver::runge_kutta_4(x0, dt, harmomic_potential);
+    vec3D xNew = x0 + dt * vNew;
+    cout << xNew;
     // Testing vec3D class:
     // vec3D v0;
     // cout << "Default constructor of vec3D" << endl;
