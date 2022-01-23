@@ -423,6 +423,8 @@ int main() {
     cout << "Testing solver Class" << endl;
     solver::test_solver(6., (DoubleCall)test);
 
+    cout << "Testing solver Class with harmonic oscillator" << endl;
+
     // Testing vec3D class:
     // vec3D v0;
     // cout << "Default constructor of vec3D" << endl;
