@@ -6,12 +6,11 @@
 #include <iostream>
 
 class vec3D {
-   private:
+   public:
     double x;
     double y;
     double z;
 
-   public:
     // Constructor of the vec3D class:
     vec3D(double x1, double x2, double x3);
 
