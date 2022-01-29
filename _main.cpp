@@ -1,6 +1,6 @@
 // Main CPP-File for creating orbital simulations of multibody systems.
 // Currently leads to compiler problems with g++ as updated via MSYS2 because of the vector.push_back problem: https://stackoverflow.com/questions/69773877/getting-throw-bad-array-new-lengthv-when-trying-to-use-stdvectorpush-back
-// Using g++ 8.3.0, gdb 10.1 from Rtools mingw64 works.
+// Using g++ 8.3.0, gdb 10.1 from Rtools mingw64 works (29.01.2022).
 #include <math.h>
 
 #include <fstream>
