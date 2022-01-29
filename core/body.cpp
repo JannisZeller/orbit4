@@ -1,6 +1,6 @@
 #include "body.h"
 
-// std::vector<body*> body::Bodies;
+std::vector<body*> body::Bodies;
 
 body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
     // if (Bodies.size() == 0) {

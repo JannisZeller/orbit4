@@ -20,8 +20,7 @@ class body {
     double radius;
     bool massive;
     bool movable;
-    inline static std::vector<body*> Bodies;  // The "inline"-keyword is needed to make the static non-function member visible to the .cpp file.
-    // inline static std::vector<int> count;
+    static std::vector<body*> Bodies;  // The "inline"-keyword is needed to make the static non-function member visible to the .cpp file. can be used from std=c++17
     // conversion to AU and     t=1EarthDay and   m=1Sunmass
     double G = 6.67430e-11 / pow(149597870700.0, 3) * pow(86400.0, 2) * 1.98847e30;
 
