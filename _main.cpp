@@ -7,6 +7,7 @@
 #include <vector>
 
 //#include "core/Body.h"
+#include "core/body.h"
 #include "core/convSys.h"
 #include "core/solver.h"
 #include "core/vec3D.h"
@@ -426,6 +427,7 @@ vec3D harmomic_potential(vec3D x) {
 }
 
 int main() {
+    /*
     // Testing solver class:
     cout << "Testing solver Class (RK4) with harmonic oscillator:" << endl;
     double dt = 0.05;
@@ -454,90 +456,52 @@ int main() {
                 << v.y << " , "
                 << v.z << " , ";
         outdata << harmomic_potential(x).x << endl;
-        solver::runge_kutta_fehlberg2(x, v, dt, harmomic_potential);
+        solver::runge_kutta_fehlberg1(x, v, dt, harmomic_potential);
     }
     outdata.close();
 
-    // Testing vec3D class:
-    // vec3D v0;
-    // cout << "Default constructor of vec3D" << endl;
-    // cout << v0 << endl;
-    // vec3D v1(1., 2., 3.);
-    // vec3D v2(-1., -2., -3.);
+    */
 
-    // cout << "Summation" << endl;
-    // cout << v1 + v2 << 3. + v1 << v1 + 3. << endl;
-
-    // cout << "Substraction" << endl;
-    // cout << v1 - v2 << 3 - v1 << v1 - 3 << endl;
-
-    // cout << "Elementwise / Scalar Multiplication" << endl;
-    // cout << v1 * v2 << 3 * v1 << v1 * 3 << endl;
-
-    // cout << "Dot product" << endl;
-    // cout << v1.dot(v2) << endl;
-
-    // cout << "Elementwise / Scalar Division" << endl;
-    // cout << v1 / v2 << 3 / v1 << v1 / 3 << endl;
-
-    // cout << "Combination 3+v1+v1-4" << endl;
-    // cout << 3 + v1 + v1 - 4 << endl;
-
-    // cout << "Combination 3*v1/4+1" << endl;
-    // cout << 3 * v1 / 4 + 1 << endl;
-
-    // cout << "Paranthesis" << endl;
-    // cout << 3 * (v1 + v2 + 1) << endl;
-
-    // cout << "ConvSys testing" << endl;
-    // double x = 1.;
-    // cout << convSys<double>::lenConv(x) << endl;
-    // cout << convSys<vec3D>::lenConv(v1) << endl;
-    // cout << convSys<vec3D>::velConv(v1) << endl;
-    // cout << convSys<double>::massConv(2000000000000) << endl;
-
-    /*
     const double NYear = 5.;
     const int stepsPerDay = 1;
-    const double SUN_MASS   = 1.989e30;
+    const double SUN_MASS = 1.989e30;
     const double SUN_RADIUS = 695700000.0;
-    const double EARTH_X0   = -147095000000.0;
-    const double EARTH_Y0   = 0.0;
-    const double EARTH_VX0  = 0.0;
-    const double EARTH_VY0  = -30300.0;
+    const double EARTH_X0 = -147095000000.0;
+    const double EARTH_Y0 = 0.0;
+    const double EARTH_VX0 = 0.0;
+    const double EARTH_VY0 = -30300.0;
     const double EARTH_MASS = 5.972e24;
     const double EARTH_RADIUS = 6371000.0;
-    const double dt = 1./(double)stepsPerDay;                  // 1 earth day = 86400.0 seconds
+    // const double dt = 1. / (double)stepsPerDay;  // 1 earth day = 86400.0 seconds
 
     // 2.1.1
-    Vector3d Pos, Vel;
+    vec3D Pos(0.0, 0.0, 0.0);
+    vec3D Vel(0.0, -0.01, 0.0);
 
-    Pos << 0.0, 0.0, 0.0;
-    Vel << 0.0, -0.01, 0.0;
-    Body sun(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
-    
-    
+    body sun(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
+
     // Pos << -46000000000.0, 0.0, 0.0;
     // Vel << 0.0, -58980.0, 0;
     // Body mercury(Pos, Vel, 0.33011e24, 2439700., "Mercury");
-    
-    
-    Pos << -147095000000., 0., 0.;
-    Vel << 0., -30300., 0.;
-    Body earth(Pos, Vel, 5.972e24, 6371000.0, "Earth");
 
-    
+    vec3D Pos2(-147095000000., 0., 0.);
+    vec3D Vel2(0., -30300., 0.);
+    body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth");
+
     // Pos << -147095000000.-0.3844e6, 0.0, 0.0;
     // Vel << 0.0, -30300.-1022., 0.0;
     // Body moon(Pos, Vel, 0.07346e24, 1738100., "Moon", "SI", false, true);
-    
 
-    Pos << 2., 0., 0.;
-    Vel << 0., 0.01, 0.;
-    Body moon(Pos, Vel, 1., 1738100., "Moon", "generic", true, true);
+    vec3D Pos3(2., 0., 0.);
+    vec3D Vel3(0., 0.01, 0.);
+    body moon(Pos3, Vel3, 1., 1738100., "Moon", "generic", true, true);
 
+    body::print_bodies();
+    // for (int x : body::count) {
+    //     cout << x << endl;
+    // }
 
-
+    /*
     // 2.1.5
     ofstream outdata;
     string algorithm = "rkf45a38";
@@ -600,7 +564,7 @@ int main() {
     Body::print_bodies();
     */
 
-    cout << "Press any key to close the application. Ver. 0.0004" << endl;
+    cout << "Press any key to close the application. Ver. 0.0013" << endl;
     cin.ignore();
     return 0;
 }
