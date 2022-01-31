@@ -26,11 +26,11 @@ class body {
 
     body(vec3D Pos, vec3D Vel, double m, double r, std::string str = "Default", std::string uSys = "SI", bool bool_massive = true, bool bool_movable = true);
 
-    void compute_acceleration(vec3D X, vec3D& A);
+    vec3D compute_acceleration(vec3D X);
 
     void sum_acceleration(vec3D& A);
 
-    void step(double dt, body* other, std::string algo = "rkf38");
+    void step(double dt, body other, std::string algo = "rkf38");
 
     static void sys_step(double dt, std::string algo = "rkf38");
 

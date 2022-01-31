@@ -5,6 +5,7 @@
 
 typedef double (*DoubleCall)(double args);
 typedef vec3D (*Vec3DCall)(vec3D args);
+typedef void (*voidCall)(vec3D args);
 
 // The different algorithms implemented in this class assume dx/dt=f(x) with no
 // explicit time dependency of f.

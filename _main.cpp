@@ -422,11 +422,11 @@ double test(double x) {
 }
 
 // Only works, when input vector is of type (x1, 0, 0)
-vec3D harmomic_potential(vec3D x) {
-    double D = 1.;
-    vec3D ret = -D * x;
-    return (ret);
-}
+// vec3D harmomic_potential(vec3D x) {
+//     double D = 1.;
+//     vec3D ret = -D * x;
+//     return (ret);
+// }
 
 int main() {
     /*
@@ -494,8 +494,11 @@ int main() {
     // Vel << 0.0, -30300.-1022., 0.0;
     // Body moon(Pos, Vel, 0.07346e24, 1738100., "Moon", "SI", false, true);
     vec3D ATest;
-    sun.compute_acceleration(earth.position, ATest);
+    ATest = sun.compute_acceleration(earth.position);
     cout << ATest << endl;
+    cout << earth.position << endl;
+    earth.step(1., sun, "rk4");
+    cout << earth.position << endl;
 
     body::print_bodies();
     // for (int x : body::count) {

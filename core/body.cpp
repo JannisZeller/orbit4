@@ -27,12 +27,12 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
     }
 }
 
-void body::compute_acceleration(vec3D X, vec3D& A) {
+vec3D body::compute_acceleration(vec3D X) {
     vec3D diff;
     diff = X - position;
     double dist = diff.norm();
     double distPow = pow(dist, 3);
-    A = -G * mass / distPow * diff;
+    return -G * mass / distPow * diff;
 }
 
 // void body::sum_acceleration(vec3D& A) {
@@ -46,12 +46,17 @@ void body::compute_acceleration(vec3D X, vec3D& A) {
 //         }
 //     }
 // }
-
-void body::step(double dt, body* other, std::string algo /*= "rkf38"*/) {
-    vec3D A_temp, Pos_temp;
-    vec3D k1, k1v, k2, k2v, k3, k3v, k4, k4v, k5, k5v, k6, k6v;
+vec3D harmomic_potential(vec3D x) {
+    double D = 1.;
+    vec3D ret = -D * x;
+    return (ret);
+}
+void body::step(double dt, body other, std::string algo /*= "rkf38"*/) {
+    vec3D temp(vec3D x) {
+        return (other.compute_acceleration(x));
+    }
     if (algo == "rk4") {
-        // solver::runge_kutta_4(this.x, v, dt, other->compute_acceleration)
+        solver::runge_kutta_4(this->position, this->velocity, dt, temp);
     }
     // else {
     //     throw std::invalid_argument("Algorithm for update rule in body.step not defined/available!");
