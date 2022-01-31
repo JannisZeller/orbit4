@@ -497,7 +497,9 @@ int main() {
     ATest = sun.compute_acceleration(earth.position);
     cout << ATest << endl;
     cout << earth.position << endl;
-    earth.step(1., sun, "rk4");
+    // earth.step(1., sun, "rk4");
+    vec3D xTest, vTest;
+    solver::runge_kutta_4(xTest, vTest, 1, vec3D(body::*sun.compute_acceleration)(vec3D));
     cout << earth.position << endl;
 
     body::print_bodies();

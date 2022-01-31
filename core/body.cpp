@@ -52,12 +52,12 @@ vec3D harmomic_potential(vec3D x) {
     return (ret);
 }
 void body::step(double dt, body other, std::string algo /*= "rkf38"*/) {
-    vec3D temp(vec3D x) {
-        return (other.compute_acceleration(x));
-    }
-    if (algo == "rk4") {
-        solver::runge_kutta_4(this->position, this->velocity, dt, temp);
-    }
+    // vec3D temp(vec3D x) {
+    //     return (other.compute_acceleration(x));
+    // }
+    // if (algo == "rk4") {
+    //     solver::runge_kutta_4(this->position, this->velocity, dt, vec3D(&other.compute_acceleration)(vec3D));
+    // }
     // else {
     //     throw std::invalid_argument("Algorithm for update rule in body.step not defined/available!");
     // }

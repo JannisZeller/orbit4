@@ -5,7 +5,7 @@
 #include <iostream>
 
 // Runge-Kutta 4th Order functional:
-void solver::runge_kutta_4(vec3D& x, vec3D& v, double dt, Vec3DCall f) {
+void solver::runge_kutta_4(vec3D& x, vec3D& v, double dt, vec3D (*f)(vec3D)) {
     // Iteravly applying RK4 algorithm for x and v:
     vec3D k1v = f(x);
     vec3D k1x = v;

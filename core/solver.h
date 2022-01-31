@@ -22,8 +22,8 @@ typedef void (*voidCall)(vec3D args);
 
 class solver {
    public:
-    // Runge-Kutta 4th Order functional:
-    static void runge_kutta_4(vec3D& x, vec3D& v, double dt, Vec3DCall f);
+    // Runge-Kutta 4th Order functional: Vec3DCall f
+    static void runge_kutta_4(vec3D& x, vec3D& v, double dt, vec3D (*f)(vec3D));
 
     // Runge-Kutta-Fehlberg 4(5)-th order method (Fehlberg, 1969, p. 12)
     static void runge_kutta_fehlberg1(vec3D& x, vec3D& v, double dt, Vec3DCall f);
