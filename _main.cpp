@@ -478,7 +478,7 @@ int main() {
 
     // 2.1.1
     vec3D Pos(0.0, 0.0, 0.0);
-    vec3D Vel(0.0, -0.01, 0.0);
+    vec3D Vel(0.0, 0.0, 0.0);
 
     body sun(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
 
@@ -493,10 +493,9 @@ int main() {
     // Pos << -147095000000.-0.3844e6, 0.0, 0.0;
     // Vel << 0.0, -30300.-1022., 0.0;
     // Body moon(Pos, Vel, 0.07346e24, 1738100., "Moon", "SI", false, true);
-
-    vec3D Pos3(2., 0., 0.);
-    vec3D Vel3(0., 0.01, 0.);
-    body moon(Pos3, Vel3, 1., 1738100., "Moon", "generic", true, true);
+    vec3D ATest;
+    sun.compute_acceleration(earth.position, ATest);
+    cout << ATest << endl;
 
     body::print_bodies();
     // for (int x : body::count) {

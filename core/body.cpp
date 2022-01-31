@@ -47,10 +47,12 @@ void body::compute_acceleration(vec3D X, vec3D& A) {
 //     }
 // }
 
-void body::step(double dt, body* other, std::string algo /*= "rkf45a38"*/) {
+void body::step(double dt, body* other, std::string algo /*= "rkf38"*/) {
     vec3D A_temp, Pos_temp;
     vec3D k1, k1v, k2, k2v, k3, k3v, k4, k4v, k5, k5v, k6, k6v;
-
+    if (algo == "rk4") {
+        // solver::runge_kutta_4(this.x, v, dt, other->compute_acceleration)
+    }
     // else {
     //     throw std::invalid_argument("Algorithm for update rule in body.step not defined/available!");
     // }
