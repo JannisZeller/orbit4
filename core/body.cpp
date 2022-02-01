@@ -1,5 +1,7 @@
 #include "body.h"
 
+#include <math.h>
+
 std::vector<body*> body::Bodies;
 
 body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
@@ -27,12 +29,12 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
     }
 }
 
-vec3D body::compute_acceleration(vec3D X) {
+vec3D body::compute_acceleration(body b1, body b2) {
     vec3D diff;
-    diff = X - position;
+    diff = b2.position - b1.position;
     double dist = diff.norm();
-    double distPow = pow(dist, 3);
-    return -G * mass / distPow * diff;
+    double distPow = std::pow(dist, 3);
+    return -b1.G * b1.mass / distPow * diff;
 }
 
 // void body::sum_acceleration(vec3D& A) {

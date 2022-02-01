@@ -494,12 +494,12 @@ int main() {
     // Vel << 0.0, -30300.-1022., 0.0;
     // Body moon(Pos, Vel, 0.07346e24, 1738100., "Moon", "SI", false, true);
     vec3D ATest;
-    ATest = sun.compute_acceleration(earth.position);
+    ATest = sun.compute_acceleration(sun, earth);
     cout << ATest << endl;
     cout << earth.position << endl;
     // earth.step(1., sun, "rk4");
     vec3D xTest, vTest;
-    solver::runge_kutta_4(xTest, vTest, 1, vec3D(body::*sun.compute_acceleration)(vec3D));
+    // solver::runge_kutta_4(xTest, vTest, 1, vec3D(body::*sun.compute_acceleration)(vec3D));
     cout << earth.position << endl;
 
     body::print_bodies();
@@ -570,7 +570,7 @@ int main() {
     Body::print_bodies();
     */
 
-    cout << "Press any key to close the application. Ver. 0.0014" << endl;
+    cout << "Press any key to close the application. Ver. 0.0016" << endl;
     cin.ignore();
     return 0;
 }
