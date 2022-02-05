@@ -1,11 +1,14 @@
 #ifndef SOLVER
 #define SOLVER
 
+#include <functional>
+
 #include "vec3D.h"
 
-typedef double (*DoubleCall)(double args);
-typedef vec3D (*Vec3DCall)(vec3D args);
-typedef void (*voidCall)(vec3D args);
+// typedef double (*DoubleCall)(double args);
+// typedef vec3D (*Vec3DCall)(vec3D args);
+// typedef void (*voidCall)(vec3D args);
+// template <typename Callable>
 
 // The different algorithms implemented in this class assume dx/dt=f(x) with no
 // explicit time dependency of f.
@@ -23,13 +26,13 @@ typedef void (*voidCall)(vec3D args);
 class solver {
    public:
     // Runge-Kutta 4th Order functional:
-    static void runge_kutta_4(vec3D& x, vec3D& v, double dt, Vec3DCall f);
+    static void runge_kutta_4(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f);
 
     // Runge-Kutta-Fehlberg 4(5)-th order method (Fehlberg, 1969, p. 12)
-    static void runge_kutta_fehlberg1(vec3D& x, vec3D& v, double dt, Vec3DCall f);
+    static void runge_kutta_fehlberg1(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f);
 
     // Runge-Kutta-Fehlberg 4(5)-th order method with coefficients from D. Sarafyan
-    static void runge_kutta_fehlberg2(vec3D& x, vec3D& v, double dt, Vec3DCall f);
+    static void runge_kutta_fehlberg2(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f);
 };
 
 #endif

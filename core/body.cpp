@@ -46,21 +46,18 @@ vec3D body::compute_acceleration(vec3D X) {
 //         }
 //     }
 // }
-vec3D harmomic_potential(vec3D x) {
-    double D = 1.;
-    vec3D ret = -D * x;
-    return (ret);
-}
+
 void body::step(double dt, body other, std::string algo /*= "rkf38"*/) {
-    vec3D temp(vec3D x) {
-        return (other.compute_acceleration(x));
-    }
+    auto temp = std::bind(&body::compute_acceleration, other, std::placeholders::_1);
     if (algo == "rk4") {
         solver::runge_kutta_4(this->position, this->velocity, dt, temp);
+    } else if (algo == "rkf1") {
+        solver::runge_kutta_fehlberg1(this->position, this->velocity, dt, temp);
+    } else if (algo == "rkf2") {
+        solver::runge_kutta_fehlberg2(this->position, this->velocity, dt, temp);
+    } else {
+        throw std::invalid_argument("Algorithm for update rule in body.step not defined/available!");
     }
-    // else {
-    //     throw std::invalid_argument("Algorithm for update rule in body.step not defined/available!");
-    // }
 }
 
 /*

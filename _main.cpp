@@ -422,25 +422,27 @@ double test(double x) {
 }
 
 // Only works, when input vector is of type (x1, 0, 0)
-// vec3D harmomic_potential(vec3D x) {
-//     double D = 1.;
-//     vec3D ret = -D * x;
-//     return (ret);
-// }
+vec3D harmomic_potential(vec3D x) {
+    double D = 1.;
+    vec3D ret = -D * x;
+    return (ret);
+}
 
 int main() {
-    /*
+    //--------------------------------------------------------------------------------
     // Testing solver class:
+    /*
     cout << "Testing solver Class (RK4) with harmonic oscillator:" << endl;
     double dt = 0.05;
-    vec3D x(1., 0., 0.);
+    vec3D x(2., 0., 0.);
     vec3D f = harmomic_potential(x);
     cout << f;
 
     vec3D v(0., 0., 0.);
-    solver::runge_kutta_fehlberg2(x, v, dt, harmomic_potential);
+    solver::runge_kutta_4(x, v, dt, harmomic_potential);
     cout << x;
     cout << v;
+
 
     ofstream outdata;
 
@@ -461,8 +463,10 @@ int main() {
         solver::runge_kutta_fehlberg1(x, v, dt, harmomic_potential);
     }
     outdata.close();
-
     */
+
+    //--------------------------------------------------------------------------------
+    // Testing body class:
 
     const double NYear = 5.;
     const int stepsPerDay = 1;
@@ -500,11 +504,32 @@ int main() {
     earth.step(1., sun, "rk4");
     cout << earth.position << endl;
 
+    ofstream outdata;
+
+    outdata.open("dataTest.csv");  // opens the file
+    if (!outdata) {                // file couldn't be opened
+        cerr << "Error: file could not be opened" << endl;
+        exit(1);
+    }
+
+    for (int nstep = 0; nstep <= (int)365; nstep++) {
+        outdata << earth.position.x << " , "
+                << earth.position.y << " , "
+                << earth.position.z << " , ";
+        outdata << earth.velocity.x << " , "
+                << earth.velocity.y << " , "
+                << earth.velocity.z << " , " << endl;
+        earth.step(1., sun, "rk4");
+    }
+    outdata.close();
+
     body::print_bodies();
     // for (int x : body::count) {
     //     cout << x << endl;
     // }
 
+    //--------------------------------------------------------------------------------
+    // Older code:
     /*
     // 2.1.5
     ofstream outdata;
@@ -520,21 +545,21 @@ int main() {
         // earth.step(dt, &sun, algorithm);
         // mercury.step(dt, &sun, algorithm);
         Body::sys_step(dt);
-        outdata << earth.position(0) << " ; " 
-                << earth.position(1) << " ; " 
+        outdata << earth.position(0) << " ; "
+                << earth.position(1) << " ; "
                 << earth.position(2) << " ; ";
-        // outdata << mercury.position(0) << " ; " 
-        //         << mercury.position(1) << " ; " 
-        //         << mercury.position(2) << endl; 
-        outdata << sun.position(0) << " ; " 
-                << sun.position(1) << " ; " 
+        // outdata << mercury.position(0) << " ; "
+        //         << mercury.position(1) << " ; "
+        //         << mercury.position(2) << endl;
+        outdata << sun.position(0) << " ; "
+                << sun.position(1) << " ; "
                 << sun.position(2) << " ; ";
-        outdata << moon.position(0) << " ; " 
-                << moon.position(1) << " ; " 
-                << moon.position(2) << endl; 
+        outdata << moon.position(0) << " ; "
+                << moon.position(1) << " ; "
+                << moon.position(2) << endl;
     }
     outdata.close();
-    
+
 
     cout << "\n\n Testing sum_acceleration:" << endl;
     cout << "----------------------------"   << endl;
@@ -545,9 +570,6 @@ int main() {
     sun.compute_acceleration(earth.position, sun_acc2);
     cout << sun_acc2 << endl;
 
-    */
-
-    /*
     cout << "\n\n Testing sum_acceleration:" << endl;
     cout << "----------------------------"   << endl;
     Vector3d acc_EaSu_at_merc, acc_Ea_at_merc, acc_Su_at_merc;
