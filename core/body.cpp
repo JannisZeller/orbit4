@@ -47,7 +47,7 @@ vec3D body::compute_acceleration(vec3D X) {
 //     }
 // }
 
-void body::step(double dt, body other, std::string algo /*= "rkf38"*/) {
+void body::step(double dt, body other, std::string algo /*= "rkf2"*/) {
     auto temp = std::bind(&body::compute_acceleration, other, std::placeholders::_1);
     if (algo == "rk4") {
         solver::runge_kutta_4(this->position, this->velocity, dt, temp);
@@ -61,7 +61,7 @@ void body::step(double dt, body other, std::string algo /*= "rkf38"*/) {
 }
 
 /*
-void body::sys_step(double dt, std::string algo = "rkf45a38") {
+void body::sys_step(double dt, std::string algo = "rkf2") {
     for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         if ((*p)->movable) {
             vec3D Pos_temp(0., 0., 0.);
