@@ -590,7 +590,7 @@ int main() {
     Body::print_bodies();
     */
 
-    cout << "Press any key to close the application. Ver. 0.0014" << endl;
+    cout << "Press any key to close the application. Ver. 0.0015" << endl;
     cin.ignore();
     return 0;
 }
