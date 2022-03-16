@@ -43,7 +43,6 @@ vec3D body::sum_acceleration() {
     vec3D A(0.0, 0.0, 0.0);
     for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         if ((*p)->massive && (*p) != this) {
-            double num;
             vec3D temp = (*p)->compute_acceleration(position);
             A = A + temp;
         }

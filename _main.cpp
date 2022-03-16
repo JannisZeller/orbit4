@@ -484,7 +484,8 @@ int main() {
     vec3D Pos(0.0, 0.0, 0.0);
     vec3D Vel(0.0, 0.0, 0.0);
 
-    body sun(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
+    body sun(Pos, Vel, 0.5, SUN_RADIUS, "Sun", "generic", true, true);
+    body sun2(Pos, Vel, 0.5, SUN_RADIUS, "Sun", "generic", true, true);
     // body sun2(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
 
     // Pos << -46000000000.0, 0.0, 0.0;
@@ -496,10 +497,10 @@ int main() {
     body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth");
 
     // Testing body::sum_acceleration
-    // cout << "Testing body::sum_acceleration:" << endl;
-    // cout << earth.sum_acceleration() << endl;
-    // cout << sun.compute_acceleration(earth.position) + sun2.compute_acceleration(earth.position) << endl;
-    // cout << "-------------------------------" << endl;
+    cout << "Testing body::sum_acceleration:" << endl;
+    cout << earth.sum_acceleration() << endl;
+    cout << sun.compute_acceleration(earth.position) + sun2.compute_acceleration(earth.position) << endl;
+    cout << "-------------------------------" << endl;
 
     ofstream outdata;
 
@@ -589,7 +590,7 @@ int main() {
     */
 
     cout << "-----------" << endl;
-    cout << "Ver. 0.0018" << endl;
+    cout << "Ver. 0.0019" << endl;
     cout << "-----------" << endl;
     // cout << "Press any key to close the application." << endl;
     // cin.ignore();
