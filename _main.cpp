@@ -485,6 +485,7 @@ int main() {
     vec3D Vel(0.0, 0.0, 0.0);
 
     body sun(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
+    // body sun2(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
 
     // Pos << -46000000000.0, 0.0, 0.0;
     // Vel << 0.0, -58980.0, 0;
@@ -494,15 +495,11 @@ int main() {
     vec3D Vel2(0., -30300., 0.);
     body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth");
 
-    // Pos << -147095000000.-0.3844e6, 0.0, 0.0;
-    // Vel << 0.0, -30300.-1022., 0.0;
-    // Body moon(Pos, Vel, 0.07346e24, 1738100., "Moon", "SI", false, true);
-    vec3D ATest;
-    ATest = sun.compute_acceleration(earth.position);
-    cout << ATest << endl;
-    cout << earth.position << endl;
-    earth.step(1., sun, "rk4");
-    cout << earth.position << endl;
+    // Testing body::sum_acceleration
+    // cout << "Testing body::sum_acceleration:" << endl;
+    // cout << earth.sum_acceleration() << endl;
+    // cout << sun.compute_acceleration(earth.position) + sun2.compute_acceleration(earth.position) << endl;
+    // cout << "-------------------------------" << endl;
 
     ofstream outdata;
 
@@ -519,7 +516,8 @@ int main() {
         outdata << earth.velocity.x << " , "
                 << earth.velocity.y << " , "
                 << earth.velocity.z << " , " << endl;
-        earth.step(1., sun, "rk4");
+        // earth.step_sgl(1., sun, "rkf2");
+        earth.step(1., "rkf2");
     }
     outdata.close();
 
@@ -590,7 +588,10 @@ int main() {
     Body::print_bodies();
     */
 
-    cout << "Press any key to close the application. Ver. 0.0015" << endl;
-    cin.ignore();
+    cout << "-----------" << endl;
+    cout << "Ver. 0.0018" << endl;
+    cout << "-----------" << endl;
+    // cout << "Press any key to close the application." << endl;
+    // cin.ignore();
     return 0;
 }
