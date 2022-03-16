@@ -29,7 +29,7 @@ class body {
 
     vec3D compute_acceleration(vec3D X);
 
-    vec3D sum_acceleration();
+    vec3D sum_acceleration(vec3D pos);
 
     void step_sgl(double dt, body other, std::string algo = "rkf2");
 

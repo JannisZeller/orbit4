@@ -3,14 +3,10 @@
 std::vector<body*> body::Bodies;
 
 body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
-    // if (Bodies.size() == 0) {
-    //     Bodies.reserve(100);
-    // }
     name = str;
     massive = bool_massive;
     movable = bool_movable;
     Bodies.push_back(this);
-    // count.push_back(1);
     // If unit system is already generic ([L]=AU, [T]=EarthDays, [M]=SunMasses), just take them:
     if (uSys == "generic") {
         position = Pos;
@@ -27,7 +23,7 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
     }
 }
 
-// Calculates the acceleration of the body it is called from at any given
+// Calculates the acceleration of the "calling body" at any given
 // point in space X.
 vec3D body::compute_acceleration(vec3D X) {
     vec3D diff;
@@ -39,11 +35,14 @@ vec3D body::compute_acceleration(vec3D X) {
 
 // Sums of the acceleration of all other bodies in the system for the body
 // it is called from, meaning at the position the body is located.
-vec3D body::sum_acceleration() {
+// Has to act on a "new" vec3D (called pos) because it is called multiple
+// times with different arguments (others than just "this.position") in the
+// solvers.
+vec3D body::sum_acceleration(vec3D pos) {
     vec3D A(0.0, 0.0, 0.0);
     for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         if ((*p)->massive && (*p) != this) {
-            vec3D temp = (*p)->compute_acceleration(position);
+            vec3D temp = (*p)->compute_acceleration(pos);
             A = A + temp;
         }
     }
@@ -68,7 +67,8 @@ void body::step_sgl(double dt, body other, std::string algo /*= "rkf2"*/) {
 // Performs a single step for the "calling body" under the influence
 // of ALL other bodys in the system.
 void body::step(double dt, std::string algo /*= "rkf2"*/) {
-    auto temp = std::bind(&body::sum_acceleration, this);  // TODO: Probably to be regarded and changed...
+    // auto temp = std::bind(&body::sum_acceleration, this);  // TODO: Probably to be regarded and changed...
+    auto temp = std::bind(&body::sum_acceleration, this, std::placeholders::_1);
     if (algo == "rk4") {
         solver::runge_kutta_4(this->position, this->velocity, dt, temp);
     } else if (algo == "rkf1") {

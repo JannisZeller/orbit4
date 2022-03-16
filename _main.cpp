@@ -498,7 +498,7 @@ int main() {
 
     // Testing body::sum_acceleration
     cout << "Testing body::sum_acceleration:" << endl;
-    cout << earth.sum_acceleration() << endl;
+    cout << earth.sum_acceleration(earth.position) << endl;
     cout << sun.compute_acceleration(earth.position) + sun2.compute_acceleration(earth.position) << endl;
     cout << "-------------------------------" << endl;
 
@@ -510,7 +510,10 @@ int main() {
         exit(1);
     }
 
-    for (int nstep = 0; nstep <= (int)365; nstep++) {
+    double stepSize = 0.5;
+    double nYear = 1;
+
+    for (int nstep = 0; nstep <= (int)365 / stepSize * nYear; nstep++) {
         outdata << earth.position.x << " , "
                 << earth.position.y << " , "
                 << earth.position.z << " , ";
@@ -518,7 +521,7 @@ int main() {
                 << earth.velocity.y << " , "
                 << earth.velocity.z << " , " << endl;
         // earth.step_sgl(1., sun, "rkf2");
-        earth.step(1., "rkf2");
+        earth.step(stepSize, "rkf2");
     }
     outdata.close();
 
@@ -590,7 +593,7 @@ int main() {
     */
 
     cout << "-----------" << endl;
-    cout << "Ver. 0.0019" << endl;
+    cout << "Ver. 0.0020" << endl;
     cout << "-----------" << endl;
     // cout << "Press any key to close the application." << endl;
     // cin.ignore();
