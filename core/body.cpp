@@ -2,11 +2,14 @@
 
 std::vector<body*> body::Bodies;
 
+int body::nBodies;
+
 body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
     name = str;
     massive = bool_massive;
     movable = bool_movable;
     Bodies.push_back(this);
+    nBodies++;
     // If unit system is already generic ([L]=AU, [T]=EarthDays, [M]=SunMasses), just take them:
     if (uSys == "generic") {
         position = Pos;
@@ -22,6 +25,10 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
         radius = convSys<double>::lenConv(r);
     }
 }
+
+// ---------------------------------------------------
+// TODO: Destructor with changes on Bodies and nBodies
+// ---------------------------------------------------
 
 // Calculates the acceleration of the "calling body" at any given
 // point in space X.
@@ -67,7 +74,6 @@ void body::step_sgl(double dt, body other, std::string algo /*= "rkf2"*/) {
 // Performs a single step for the "calling body" under the influence
 // of ALL other bodys in the system.
 void body::step(double dt, std::string algo /*= "rkf2"*/) {
-    // auto temp = std::bind(&body::sum_acceleration, this);  // TODO: Probably to be regarded and changed...
     auto temp = std::bind(&body::sum_acceleration, this, std::placeholders::_1);
     if (algo == "rk4") {
         solver::runge_kutta_4(this->position, this->velocity, dt, temp);
@@ -80,29 +86,40 @@ void body::step(double dt, std::string algo /*= "rkf2"*/) {
     }
 }
 
-// void body::sys_step(double dt, std::string algo = "rkf2") {
-//     for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
-//         if ((*p)->movable) {
-//             vec3D Pos_temp(0., 0., 0.);
-//             vec3D Pos_n;
-//             Pos_n = (*p)->position;
+// Performs a whole system step obeying massive and movable boolean members of the bodies.
+void body::sys_step(double dt, std::string algo /*= "rkf2"*/) {
+    // Fist: Storing new positions based on body::sum_acceleration in a vector for all
+    // movable bodies.
+    std::vector<vec3D> posPost;
+    for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+        if ((*p)->movable) {
+            vec3D posTemp = (*p)->position;
 
-//             if (algo == "rk4") {
-//             }
+            auto temp = std::bind(&body::sum_acceleration, (*p), std::placeholders::_1);
 
-//             else if (algo == "rkf45a13") {
-//             }
+            if (algo == "rk4") {
+                solver::runge_kutta_4(posTemp, (*p)->velocity, dt, temp);
+            } else if (algo == "rkf1") {
+                solver::runge_kutta_fehlberg1(posTemp, (*p)->velocity, dt, temp);
+            } else if (algo == "rkf2") {
+                solver::runge_kutta_fehlberg2(posTemp, (*p)->velocity, dt, temp);
+            } else {
+                throw std::invalid_argument("Algorithm for update rule in body::sys_step not defined/available!");
+            }
+            posPost.push_back(posTemp);
+        }
+    }
+    // Second: Updating the positions of the bodies all at once.
+    auto pos = posPost.begin();
+    for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+        if ((*p)->movable) {
+            (*p)->position = (*pos);
+            pos = std::next(pos, 1);
+        }
+    }
+}
 
-//             else if (algo == "rkf45a38") {
-//             }
-
-//             else {
-//                 throw std::invalid_argument("Algorithm for update rule in body.step not defined/available!");
-//             }
-//         }
-//     }
-// }
-
+// Printing an overview over the bodies currently in the system.
 void body::print_bodies() {
     std::cout << "----------" << std::endl;
     std::cout << "ALL BODIES" << std::endl;

@@ -480,28 +480,30 @@ int main() {
     const double EARTH_RADIUS = 6371000.0;
     // const double dt = 1. / (double)stepsPerDay;  // 1 earth day = 86400.0 seconds
 
-    // 2.1.1
+    // Sun 1
     vec3D Pos(0.0, 0.0, 0.0);
     vec3D Vel(0.0, 0.0, 0.0);
 
-    body sun(Pos, Vel, 0.5, SUN_RADIUS, "Sun", "generic", true, true);
-    body sun2(Pos, Vel, 0.5, SUN_RADIUS, "Sun", "generic", true, true);
-    // body sun2(Pos, Vel, 1., SUN_RADIUS, "Sun", "generic", true, true);
+    body sun(Pos, Vel, 1, SUN_RADIUS, "Sun", "generic", true, true);
 
+    // Sun 2
+    vec3D Pos1(1.0, 0.0, 0.0);
+    vec3D Vel1(0.0, 0.01, 0.0);
+
+    body sun2(Pos1, Vel1, 0.01, SUN_RADIUS, "Sun", "generic", true, true);
+
+    // Mecury
     // Pos << -46000000000.0, 0.0, 0.0;
     // Vel << 0.0, -58980.0, 0;
     // Body mercury(Pos, Vel, 0.33011e24, 2439700., "Mercury");
 
+    // Earth
     vec3D Pos2(-147095000000., 0., 0.);
     vec3D Vel2(0., -30300., 0.);
+
     body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth");
 
-    // Testing body::sum_acceleration
-    cout << "Testing body::sum_acceleration:" << endl;
-    cout << earth.sum_acceleration(earth.position) << endl;
-    cout << sun.compute_acceleration(earth.position) + sun2.compute_acceleration(earth.position) << endl;
-    cout << "-------------------------------" << endl;
-
+    // Open file
     ofstream outdata;
 
     outdata.open("dataTest.csv");  // opens the file
@@ -510,6 +512,7 @@ int main() {
         exit(1);
     }
 
+    // Simulation
     double stepSize = 0.5;
     double nYear = 1;
 
@@ -519,79 +522,24 @@ int main() {
                 << earth.position.z << " , ";
         outdata << earth.velocity.x << " , "
                 << earth.velocity.y << " , "
-                << earth.velocity.z << " , " << endl;
+                << earth.velocity.z << " , ";
+        outdata << sun2.position.x << " , "
+                << sun2.position.y << " , "
+                << sun2.position.z << " , " << endl;
+        ;
         // earth.step_sgl(1., sun, "rkf2");
-        earth.step(stepSize, "rkf2");
+        body::sys_step(stepSize);
     }
     outdata.close();
 
+    // ---------------------------------------------------
+    // TODO: Implement an ofstream handler for body class
+    // ---------------------------------------------------
+
+    // Print Bodies
     body::print_bodies();
-    // for (int x : body::count) {
-    //     cout << x << endl;
-    // }
 
-    //--------------------------------------------------------------------------------
-    // Older code:
-    /*
-    // 2.1.5
-    ofstream outdata;
-    string algorithm = "rkf45a38";
-
-    outdata.open("data.csv"); // opens the file
-    if( !outdata ) { // file couldn't be opened
-        cerr << "Error: file could not be opened" << endl;
-        exit(1);
-    }
-
-    for(int nstep = 0; nstep <= (int)stepsPerDay*NYear*366; nstep++) {
-        // earth.step(dt, &sun, algorithm);
-        // mercury.step(dt, &sun, algorithm);
-        Body::sys_step(dt);
-        outdata << earth.position(0) << " ; "
-                << earth.position(1) << " ; "
-                << earth.position(2) << " ; ";
-        // outdata << mercury.position(0) << " ; "
-        //         << mercury.position(1) << " ; "
-        //         << mercury.position(2) << endl;
-        outdata << sun.position(0) << " ; "
-                << sun.position(1) << " ; "
-                << sun.position(2) << " ; ";
-        outdata << moon.position(0) << " ; "
-                << moon.position(1) << " ; "
-                << moon.position(2) << endl;
-    }
-    outdata.close();
-
-
-    cout << "\n\n Testing sum_acceleration:" << endl;
-    cout << "----------------------------"   << endl;
-    Vector3d sun_acc1, sun_acc2;
-
-    earth.sum_acceleration(sun_acc1);
-    cout << sun_acc1 << endl;
-    sun.compute_acceleration(earth.position, sun_acc2);
-    cout << sun_acc2 << endl;
-
-    cout << "\n\n Testing sum_acceleration:" << endl;
-    cout << "----------------------------"   << endl;
-    Vector3d acc_EaSu_at_merc, acc_Ea_at_merc, acc_Su_at_merc;
-
-    mercury.sum_acceleration(acc_EaSu_at_merc);
-    cout << acc_EaSu_at_merc << endl;
-
-    sun.compute_acceleration(mercury.position, acc_Su_at_merc);
-    earth.compute_acceleration(mercury.position, acc_Ea_at_merc);
-    cout << acc_Su_at_merc+acc_Ea_at_merc << endl;
-
-    cout << acc_Su_at_merc << endl;
-    */
-
-    /*
-    cout << "\n\n Testing pointer behavior:" << endl;
-    cout << "----------------------------" << endl;
-    Body::print_bodies();
-    */
-
+    // Debugging info
     cout << "-----------" << endl;
     cout << "Ver. 0.0020" << endl;
     cout << "-----------" << endl;
