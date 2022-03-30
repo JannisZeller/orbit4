@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <math.h>
 
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <iterator>
@@ -45,6 +46,8 @@ class body {
     static void sys_step(double dt, std::string algo = "rkf2");
 
     static void print_bodies();
+
+    static void simulation(double stepSize, int nYear, std::string fileName = "data.csv");
 };
 
 #endif

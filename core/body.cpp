@@ -138,6 +138,29 @@ void body::print_bodies() {
     for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         std::cout << (*p)->name << ", "
                   << "is movable: " << (*p)->movable << std::endl;
-    };
+    }
     std::cout << "Amount of Bodies: " << Bodies.size() << std::endl;
 }
+
+// Simulating a given amount of years with given step size (in days).
+// Directly outputting the results to a file with given name.
+void body::simulation(double stepSize, int nYear, std::string fileName /*"data.csv"*/) {
+    // Open file
+    std::ofstream outdata;
+    outdata.open(fileName);  // opens the file
+    if (!outdata) {          // file couldn't be opened
+        std::cerr << "Error: file could not be opened" << std::endl;
+        exit(1);
+    }
+
+    // Writing positions to file and performing system step
+    for (int nstep = 0; nstep <= (int)365 / stepSize * nYear; nstep++) {
+        for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+            outdata << (*p)->position.x << " , "
+                    << (*p)->position.y << " , "
+                    << (*p)->position.z << " , ";
+        };
+        outdata << std::endl;
+        body::sys_step(stepSize);
+    }
+};

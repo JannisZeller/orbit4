@@ -504,33 +504,35 @@ int main() {
     body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth");
 
     // Open file
-    ofstream outdata;
+    // ofstream outdata;
 
-    outdata.open("dataTest.csv");  // opens the file
-    if (!outdata) {                // file couldn't be opened
-        cerr << "Error: file could not be opened" << endl;
-        exit(1);
-    }
+    // outdata.open("dataTest.csv");  // opens the file
+    // if (!outdata) {                // file couldn't be opened
+    //     cerr << "Error: file could not be opened" << endl;
+    //     exit(1);
+    // }
 
     // Simulation
-    double stepSize = 0.5;
+    double stepSize = 0.01;
     double nYear = 1;
 
-    for (int nstep = 0; nstep <= (int)365 / stepSize * nYear; nstep++) {
-        outdata << earth.position.x << " , "
-                << earth.position.y << " , "
-                << earth.position.z << " , ";
-        outdata << earth.velocity.x << " , "
-                << earth.velocity.y << " , "
-                << earth.velocity.z << " , ";
-        outdata << sun2.position.x << " , "
-                << sun2.position.y << " , "
-                << sun2.position.z << " , " << endl;
-        ;
-        // earth.step_sgl(1., sun, "rkf2");
-        body::sys_step(stepSize);
-    }
-    outdata.close();
+    body::simulation(0.1, 2);
+
+    // for (int nstep = 0; nstep <= (int)365 / stepSize * nYear; nstep++) {
+    //     outdata << earth.position.x << " , "
+    //             << earth.position.y << " , "
+    //             << earth.position.z << " , ";
+    //     outdata << earth.velocity.x << " , "
+    //             << earth.velocity.y << " , "
+    //             << earth.velocity.z << " , ";
+    //     outdata << sun2.position.x << " , "
+    //             << sun2.position.y << " , "
+    //             << sun2.position.z << " , " << endl;
+    //     ;
+    //     // earth.step_sgl(1., sun, "rkf2");
+    //     body::sys_step(stepSize);
+    // }
+    // outdata.close();
 
     //--------------------------------------------------------------------------------
     // Testing body class destructor:
