@@ -159,7 +159,7 @@ void body::simulation(double stepSize, int nYear, std::string fileName /*"data.c
             outdata << (*p)->position.x << " , "
                     << (*p)->position.y << " , "
                     << (*p)->position.z << " , ";
-        };
+        }
         outdata << std::endl;
         body::sys_step(stepSize);
     }
