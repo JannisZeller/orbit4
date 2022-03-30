@@ -532,16 +532,39 @@ int main() {
     }
     outdata.close();
 
+    //--------------------------------------------------------------------------------
+    // Testing body class destructor:
+    /*
+    // Sun 1
+    vec3D Pos(0.0, 0.0, 0.0);
+    vec3D Vel(0.0, 0.0, 0.0);
+
+    body sun(Pos, Vel, 1, 1, "Sun", "generic", true, true);
+
+    // Sun 2
+    vec3D Pos1(1.0, 0.0, 0.0);
+    vec3D Vel1(0.0, 0.01, 0.0);
+
+    body* sun2 = new body(Pos1, Vel1, 1, 1, "Sun", "generic", true, true);
+
+    // Print Bodies
+    body::print_bodies();
+
+    delete sun2;
+    */
+
     // ---------------------------------------------------
     // TODO: Implement an ofstream handler for body class
     // ---------------------------------------------------
 
     // Print Bodies
     body::print_bodies();
+    sun2.disable();
+    body::print_bodies();
 
     // Debugging info
     cout << "-----------" << endl;
-    cout << "Ver. 0.0020" << endl;
+    cout << "Ver. 0.0022" << endl;
     cout << "-----------" << endl;
     // cout << "Press any key to close the application." << endl;
     // cin.ignore();

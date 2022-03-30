@@ -1,6 +1,7 @@
 #ifndef BODY
 #define BODY
 
+#include <bits/stdc++.h>
 #include <math.h>
 
 #include <functional>
@@ -28,6 +29,10 @@ class body {
     double G = 6.67430e-11 / pow(149597870700.0, 3) * pow(86400.0, 2) * 1.98847e30;
 
     body(vec3D Pos, vec3D Vel, double m, double r, std::string str = "Default", std::string uSys = "SI", bool bool_massive = true, bool bool_movable = true);
+
+    ~body();
+
+    void disable();
 
     vec3D compute_acceleration(vec3D X);
 

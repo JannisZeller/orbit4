@@ -4,6 +4,7 @@ std::vector<body*> body::Bodies;
 
 int body::nBodies;
 
+// Constructor which assigns a lot of properties of the body
 body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
     name = str;
     massive = bool_massive;
@@ -26,9 +27,19 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
     }
 }
 
-// ---------------------------------------------------
-// TODO: Destructor with changes on Bodies and nBodies
-// ---------------------------------------------------
+// Destructor with changes on Bodies and nBodies
+body::~body() {
+    nBodies--;
+    auto it = std::find(Bodies.begin(), Bodies.end(), this);
+    int index = it - Bodies.begin();
+    // erase the it-th element
+    Bodies.erase(Bodies.begin() + index);
+}
+
+void body::disable() {
+    massive = false;
+    movable = false;
+}
 
 // Calculates the acceleration of the "calling body" at any given
 // point in space X.
