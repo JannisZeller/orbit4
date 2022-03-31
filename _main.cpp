@@ -555,10 +555,6 @@ int main() {
     delete sun2;
     */
 
-    // ---------------------------------------------------
-    // TODO: Implement an ofstream handler for body class
-    // ---------------------------------------------------
-
     // Print Bodies
     body::print_bodies();
     sun2.disable();
@@ -566,7 +562,7 @@ int main() {
 
     // Debugging info
     cout << "-----------" << endl;
-    cout << "Ver. 0.0022" << endl;
+    cout << "Ver. 0.0023" << endl;
     cout << "-----------" << endl;
     // cout << "Press any key to close the application." << endl;
     // cin.ignore();
