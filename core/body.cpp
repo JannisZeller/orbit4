@@ -159,12 +159,16 @@ void body::simulation(double stepSize, double nYear, std::string fileName /*"dat
     int nSteps = 365 * nYear / stepSize;
     std::cout << "Simulating System with " << nSteps << " Steps." << std::endl;
     for (int step = 0; step <= nSteps; step++) {
-        for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
-            outdata << (*p)->position.x << " , "
-                    << (*p)->position.y << " , "
-                    << (*p)->position.z << " , ";
+        for (std::vector<body*>::iterator p = Bodies.begin(); p != std::prev(Bodies.end()); ++p) {
+            outdata << (*p)->position.x << ","
+                    << (*p)->position.y << ","
+                    << (*p)->position.z << ",";
         }
-        outdata << std::endl;
+        // Last object has to be included without final " , " to prevent data column full of " ".
+        body* last = Bodies.back();
+        outdata << last->position.x << ","
+                << last->position.y << ","
+                << last->position.z << std::endl;
         body::sys_step(stepSize);
         // std::cout << step << std::endl; /* Debugging */
     }

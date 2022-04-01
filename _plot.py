@@ -137,7 +137,7 @@ class PlotTraj:
 
 
 # %%
-data = pd.read_csv("data.csv", sep=";")
+data = pd.read_csv("data.csv", sep=",", header=None)
 # data.columns = ["X1", "Y1", "Z1", "X2", "Y2", "Z2"]
 
 
