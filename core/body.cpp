@@ -27,7 +27,9 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
     }
 }
 
-// Destructor with changes on Bodies and nBodies
+// Destructor with changes on Bodies and nBodies.
+// FMI: Can only be used directly on instances which have been initialized using the
+// body* temp = new body(*args) - syntax.
 body::~body() {
     nBodies--;
     auto it = std::find(Bodies.begin(), Bodies.end(), this);
