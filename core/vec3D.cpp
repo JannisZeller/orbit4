@@ -1,13 +1,20 @@
 #include "vec3D.h"
 
-// Constructor:
+// Default Constructor:
+vec3D::vec3D() {
+    x = 0.0;
+    y = 0.0;
+    z = 0.0;
+}
+
+// Custom Constructor:
 vec3D::vec3D(double x1, double x2, double x3) {
     x = x1;
     y = x2;
     z = x3;
 }
 
-// Overloading << operator
+// Overloading << operator for std::ostream
 std::ostream& operator<<(std::ostream& os, const vec3D& vec) {
     os << vec.x << ',' << vec.y << ',' << vec.z << std::endl;
     return os;

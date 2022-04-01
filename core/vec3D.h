@@ -11,13 +11,13 @@ class vec3D {
     double y;
     double z;
 
-    // Constructor of the vec3D class:
+    // Default Construcor
+    vec3D();
+
+    // Custom Constructor:
     vec3D(double x1, double x2, double x3);
 
-    // Default Construcor
-    vec3D() = default;
-
-    // Overloading << operator
+    // Overloading << operator for std::ostream
     friend std::ostream& operator<<(std::ostream& os, const vec3D& vec);
 
     // Overloading * operator

@@ -34,6 +34,8 @@ int main() {
     // Sun 1
     vec3D Pos(0.0, 0.0, 0.0);
     vec3D Vel(0.0, 0.0, 0.0);
+    cout << Vel;
+
     body sun(Pos, Vel, 1, SUN_RADIUS, "Sun", "generic", true, true);
 
     // Sun 2
@@ -55,7 +57,7 @@ int main() {
     // Running Simulation
     double stepSize = 0.01;
     double nYear = 1;
-    body::simulation(0.1, 2);
+    // body::simulation(0.1, 2);
 
     //--------------------------------------------------------------------------------
     // Print Bodies
