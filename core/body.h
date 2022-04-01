@@ -48,7 +48,7 @@ class body {
 
     static void print_bodies();
 
-    static void simulation(double stepSize, int nYear, std::string fileName = "data.csv");
+    static void simulation(double stepSize, double nYear, std::string fileName = "data.csv");
 };
 
 #endif

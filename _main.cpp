@@ -32,16 +32,14 @@ int main() {
     //--------------------------------------------------------------------------------
     // Initializing the bodies of the system:
     // Sun 1
-    vec3D Pos(0.0, 0.0, 0.0);
-    vec3D Vel(0.0, 0.0, 0.0);
-    cout << Vel;
-
-    body sun(Pos, Vel, 1, SUN_RADIUS, "Sun", "generic", true, true);
+    // vec3D Pos(0.0, 0.0, 0.0);
+    // vec3D Vel(0.0, 0.0, 0.0);
+    // body sun(Pos, Vel, 1, SUN_RADIUS, "Sun", "generic", true, true);
 
     // Sun 2
-    vec3D Pos1(1.0, 0.0, 0.0);
-    vec3D Vel1(0.0, 0.01, 0.0);
-    body sun2(Pos1, Vel1, 0.01, SUN_RADIUS, "Sun", "generic", true, true);
+    // vec3D Pos1(1.0, 0.0, 0.0);
+    // vec3D Vel1(0.0, 0.01, 0.0);
+    // body sun2(Pos1, Vel1, 0.01, SUN_RADIUS, "Sun", "generic", true, true);
 
     // Mecury
     // Pos << -46000000000.0, 0.0, 0.0;
@@ -51,13 +49,18 @@ int main() {
     // Earth
     vec3D Pos2(-147095000000., 0., 0.);
     vec3D Vel2(0., -30300., 0.);
-    body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth");
+    body earth(Pos2, Vel2, 5.972e24, 6371000.0, "Earth", "SI", true, true);
+
+    // Moon
+    vec3D Pos3(-147095000000. - 383397., 0., 0.);
+    vec3D Vel3(0., -30300. - 1023., 0.);
+    body moon(Pos3, Vel3, 1., 1., "Moon", "SI", true, true);
 
     //--------------------------------------------------------------------------------
     // Running Simulation
-    double stepSize = 0.01;
-    double nYear = 1;
-    // body::simulation(0.1, 2);
+    double stepSize = 0.001;
+    double nYear = 0.1;
+    body::simulation(stepSize, nYear);
 
     //--------------------------------------------------------------------------------
     // Print Bodies
@@ -65,7 +68,7 @@ int main() {
 
     // Debugging info
     cout << "-----------" << endl;
-    cout << "Ver. 0.0023" << endl;
+    cout << "Ver. 0.0024" << endl;
     cout << "-----------" << endl;
     // cout << "Press any key to close the application." << endl;
     // cin.ignore();
