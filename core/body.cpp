@@ -144,7 +144,7 @@ void body::print_bodies() {
     std::cout << "Amount of Bodies: " << Bodies.size() << std::endl;
 }
 
-// Simulating a given amount of years with given step size (in days).
+// Simulating a given amount of years with given step size (in year-fractions).
 // Directly outputting the results to a file with given name.
 void body::simulation(double stepSize, double nYear, std::string fileName /*"data.csv"*/) {
     // Open file
@@ -157,7 +157,10 @@ void body::simulation(double stepSize, double nYear, std::string fileName /*"dat
 
     // Writing positions to file and performing system step
     int nSteps = 365 * nYear / stepSize;
+    int progress = 1;
     std::cout << "Simulating System with " << nSteps << " Steps." << std::endl;
+    std::cout << "Progress:" << std::endl;
+    std::cout << "[";
     for (int step = 0; step <= nSteps; step++) {
         for (std::vector<body*>::iterator p = Bodies.begin(); p != std::prev(Bodies.end()); ++p) {
             outdata << (*p)->position.x << ","
@@ -171,5 +174,10 @@ void body::simulation(double stepSize, double nYear, std::string fileName /*"dat
                 << last->position.z << std::endl;
         body::sys_step(stepSize);
         // std::cout << step << std::endl; /* Debugging */
+        if ((double)step / (double)nSteps >= (double)progress * 0.1) {
+            std::cout << "#";
+            progress++;
+        }
     }
+    std::cout << "] 100%" << std::endl;
 };

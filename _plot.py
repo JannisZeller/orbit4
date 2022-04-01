@@ -61,12 +61,13 @@ class PlotTraj:
         datRow = self.df.iloc[stepIdx, :].values
         return datRow
 
-    def static_plot(self, setmax=True, NRows=None):
+    def static_plot(self, setmax=True, NRows=None, sunPosi=True):
         if NRows == None:
             NRows = self.df.shape[0]
         fig = plt.figure(figsize=(10, 10))
         ax = fig.add_subplot(111, projection="3d")
-        ax.scatter(0, 0, c="k", s=100)
+        if sunPosi is True:
+            ax.scatter(0, 0, c="k", s=100)
         if setmax == True:
             maxRad = self.get_min_max()
             offset = maxRad * 0.05
@@ -90,7 +91,9 @@ class PlotTraj:
     ):
         if NRows == None:
             NRows = self.df.shape[0]
-        dfAnim = self.df.iloc[::stepRow, :NRows]
+        dfAnim = self.df.iloc[
+            :NRows:stepRow,
+        ]
 
         fig = plt.figure()
         fig.set_figheight(15)
@@ -142,14 +145,12 @@ data = pd.read_csv("data.csv", sep=",", header=None)
 
 
 # %%
-
-AnimSys = PlotTraj(["Earth", "Moon"], [1, 1], [1, 1], df=data)
-AnimSys.static_plot(False)
+AnimSys = PlotTraj(["Earth", "Moon"], [1, 1], [1, 1], data)
+AnimSys.static_plot(False, 1000, sunPosi=False)
 
 
 # %%
-
 if ANIMATE is True:
-    AnimSys.animate(stepRow=1000, setmax=False, filename="Test.gif")
+    AnimSys.animate(stepRow=1, setmax=False, NRows=100, filename="Test.gif")
 
 # %%
