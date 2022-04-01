@@ -144,7 +144,7 @@ void body::print_bodies() {
     std::cout << "Amount of Bodies: " << Bodies.size() << std::endl;
 }
 
-// Simulating a given amount of years with given step size (in year-fractions).
+// Simulating a given amount of years with given step size (in day-fractions).
 // Directly outputting the results to a file with given name.
 void body::simulation(double stepSize, double nYear, std::string fileName /*"data.csv"*/) {
     // Open file

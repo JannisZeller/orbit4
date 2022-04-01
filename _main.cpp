@@ -32,9 +32,9 @@ int main() {
     //--------------------------------------------------------------------------------
     // Initializing the bodies of the system:
     // Sun 1
-    // vec3D Pos(0.0, 0.0, 0.0);
-    // vec3D Vel(0.0, 0.0, 0.0);
-    // body sun(Pos, Vel, 1, SUN_RADIUS, "Sun", "generic", true, true);
+    vec3D Pos1(0.0, 0.0, 0.0);
+    vec3D Vel1(0.0, 0.0, 0.0);
+    body sun(Pos1, Vel1, 1, SUN_RADIUS, "Sun", "generic", true, true);
 
     // Sun 2
     // vec3D Pos1(1.0, 0.0, 0.0);
@@ -47,20 +47,20 @@ int main() {
     // Body mercury(Pos, Vel, 0.33011e24, 2439700., "Mercury", "SI", true, true);
 
     // Earth
-    vec3D Pos2(-147095000000., 0., 0.);
-    vec3D Vel2(0., -30300., 0.);
-    body earth(Pos2, vec3D(0.0, 0.0, 0.0), 5.972e24, 6371000.0, "Earth", "SI", true, true);
+    vec3D Pos2(-149598022960., 0., 0.);
+    vec3D Vel2(0., -29290., 0.);
+    body earth(Pos2, Vel2, EARTH_MASS, 6371000.0, "Earth", "SI", true, true);
 
     // Moon
-    vec3D Pos3(-147095000000. - 383397., 0., 0.);
-    vec3D Vel3(0., -30300. - 1023., 0.);
+    vec3D Pos3(-149598022960. - 383397000., 0., 0.);
+    vec3D Vel3(0., -29290. - 1023., 0.);
     vec3D Vel4(0., -1023., 0.);
-    body moon(Pos3, Vel4, 1., 1., "Moon", "SI", true, true);
+    body moon(Pos3, Vel3, EARTH_MASS / 81.3, 1., "Moon", "SI", true, true);
 
     //--------------------------------------------------------------------------------
     // Running Simulation
-    double stepSize = 0.001;
-    double nYear = 0.1;
+    double stepSize = 0.005;
+    double nYear = 2;
     body::simulation(stepSize, nYear);
 
     //--------------------------------------------------------------------------------

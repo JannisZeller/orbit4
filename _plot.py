@@ -79,6 +79,7 @@ class PlotTraj:
             yArr = self.df.iloc[:NRows, 3 * no + 1].values
             zArr = self.df.iloc[:NRows, 3 * no + 2].values
             ax.plot(xArr, yArr, zArr, c=self.colors[no % 10])
+            ax.scatter(xArr[-1], yArr[-1], zArr[-1], c=self.colors[no % 10])
 
     def animate(
         self,
@@ -87,6 +88,7 @@ class PlotTraj:
         stepRow=10,
         setmax=True,
         NRows=None,
+        centerDot=True,
         filename="orbit_out.gif",
     ):
         if NRows == None:
@@ -114,7 +116,7 @@ class PlotTraj:
             for no in range(self.noBodies):
                 hist_idx = stepIdx * stepRow
                 xArr = dfAnim.iloc[stepIdx, :].values
-                if history == True:
+                if history is True:
                     xHist = self.df.iloc[:hist_idx, 3 * no].values
                     yHist = self.df.iloc[:hist_idx, 3 * no + 1].values
                     zHist = self.df.iloc[:hist_idx, 3 * no + 2].values
@@ -125,7 +127,8 @@ class PlotTraj:
                     xArr[3 * no + 2],
                     c=self.colors[no % 10],
                 )  # self.colors[no%10]
-                ax.scatter(0, 0, c="k", s=100)
+                if centerDot is True:
+                    ax.scatter(0, 0, c="k", s=100)
 
         max_frames = int(np.floor(self.noSimSteps / stepRow))
         ani = anim.FuncAnimation(
@@ -141,16 +144,30 @@ class PlotTraj:
 
 # %%
 data = pd.read_csv("data.csv", sep=",", header=None)
-# data.columns = ["X1", "Y1", "Z1", "X2", "Y2", "Z2"]
 
 
 # %%
-AnimSys = PlotTraj(["Earth", "Moon"], [1, 1], [1, 1], data)
-AnimSys.static_plot(False, 1000, sunPosi=False)
+## Extract Moon relative to earth
+dataEarth = data.iloc[:, 3:6]
+dataMoon = data.iloc[:, 6:9]
+dataMoonRel = pd.DataFrame(dataMoon.values - dataEarth.values)
+
+# %%
+AnimSys = PlotTraj(
+    ["Earth", "Moon"], [1, 1], [1, 1], dataMoonRel
+)  # data.iloc[:, 3:9] (only last 2 bodies)
+AnimSys.static_plot(setmax=False, NRows=None, sunPosi=False)
 
 
 # %%
 if ANIMATE is True:
-    AnimSys.animate(stepRow=1, setmax=False, NRows=100, filename="Test.gif")
+    AnimSys.animate(
+        stepRow=1,
+        setmax=False,
+        history=False,
+        centerDot=False,
+        NRows=1000,
+        filename="Test.gif",
+    )
 
 # %%
