@@ -69,7 +69,7 @@ int main() {
 
     // Debugging info
     cout << "-----------" << endl;
-    cout << "Ver. 0.0025" << endl;
+    cout << "Ver. 0.0026" << endl;
     cout << "-----------" << endl;
     // cout << "Press any key to close the application." << endl;
     // cin.ignore();
