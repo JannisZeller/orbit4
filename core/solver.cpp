@@ -42,7 +42,7 @@ void solver::runge_kutta_fehlberg1(vec3D& x, vec3D& v, double dt, std::function<
 void solver::runge_kutta_fehlberg2(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f) {
     vec3D k1v = f(x);
     vec3D k1x = v;
-    vec3D k2v = f(x + dt * k1v / 4.);
+    vec3D k2v = f(x + dt * k1x / 4.);
     vec3D k2x = v + dt * k1v / 4.;
     vec3D k3v = f(x + dt * k1x * 3. / 32. + dt * k2x * 9. / 32.);
     vec3D k3x = v + dt * k1v * 3. / 32. + dt * k2v * 9. / 32.;
