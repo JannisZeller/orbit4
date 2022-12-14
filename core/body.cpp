@@ -44,6 +44,31 @@ void Body::disable() {
 
 // Calculates the acceleration of the "calling body" at any given
 // point in space X.
+vec3D Body::compute_acceleration_at(vec3D X) {
+    vec3D diff;
+    diff = X - position;
+    double dist = diff.norm();
+    double distPow = pow(dist, 3);
+    return -G * mass / distPow * diff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DEPRECATED ##################################################################
+
 vec3D Body::compute_acceleration(vec3D X) {
     vec3D diff;
     diff = X - position;
@@ -51,6 +76,7 @@ vec3D Body::compute_acceleration(vec3D X) {
     double distPow = pow(dist, 3);
     return -G * mass / distPow * diff;
 }
+
 
 // Sums of the acceleration of all other bodies in the system for the body
 // it is called from, meaning at the position the body is located.

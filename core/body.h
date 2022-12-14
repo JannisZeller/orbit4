@@ -43,6 +43,11 @@ class Body {
 
     vec3D compute_acceleration(vec3D X);
 
+    vec3D compute_acceleration_at(vec3D X);
+
+
+
+    // DEPRECATED 
     vec3D sum_acceleration(vec3D pos);
 
     void step_sgl(double dt, Body other, std::string algo = "rkf2");

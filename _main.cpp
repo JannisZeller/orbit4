@@ -61,6 +61,18 @@ int main() {
 
     sys.print_bodies();
 
+    // cout << sys.compute_acceleration_at_for(earth.position, earth) << endl;
+
+    cout << sun.compute_acceleration(earth.position) << endl;
+
+
+    cout << earth.position << endl;
+    for (int step = 0; step <= 180; step++) {
+        sys.step(1.);
+    }
+    cout << earth.position << endl;
+
+
 
 
 

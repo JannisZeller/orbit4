@@ -39,8 +39,11 @@ class System {
     // Add a single body
     void add_body(Body& body);
 
+    // Compute Acceleration for a single body based on other bodies
+    // vec3D compute_acceleration_at_for(vec3D position, Body& body);
+
     // Simulate a single step
-    // void step(double dt, std::string algo = "rkf2");
+    void step(double dt, std::string algo = "rkf2");
 
     // Print all Bodies in the system
     void print_bodies();
