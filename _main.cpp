@@ -108,7 +108,7 @@ int main() {
 
     //Final Info and Prints
     cout << "" << endl;
-    cout << "Ver. 0.0027" << endl;
+    cout << "Ver. 0.0028" << endl;
     cout << "-----------" << endl;
     cout << "Press any key to close the application." << endl;
     cin.ignore();
