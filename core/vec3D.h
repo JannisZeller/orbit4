@@ -1,12 +1,17 @@
-#ifndef VEC3D
-#define VEC3D
+#ifndef VEC3D_H
+#define VEC3D_H
 
 #include <math.h>
-
 #include <iostream>
 
+// vec3D
+// -----
+// vec3D is a class for 3-dimensional vector arithmetics.
+
 class vec3D {
-   public:
+
+// Everything is public. Nothing needs to be hidden here.
+  public:
     double x;
     double y;
     double z;
@@ -43,7 +48,7 @@ class vec3D {
     // Norm for length of vector
     double norm();
 
-    // Dot product
+    // Dot or scalar product
     double dot(vec3D& other);
 };
 

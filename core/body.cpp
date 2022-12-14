@@ -1,11 +1,10 @@
 #include "body.h"
 
-std::vector<body*> body::Bodies;
-
-int body::nBodies;
+std::vector<Body*> Body::Bodies;
+int Body::nBodies;
 
 // Constructor which assigns a lot of properties of the body
-body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
+Body::Body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Default"*/, std::string uSys /*= "SI"*/, bool bool_massive /*= true*/, bool bool_movable /*= true*/) {
     name = str;
     massive = bool_massive;
     movable = bool_movable;
@@ -30,7 +29,7 @@ body::body(vec3D Pos, vec3D Vel, double m, double r, std::string str /*= "Defaul
 // Destructor with changes on Bodies and nBodies.
 // FMI: Can only be used directly on instances which have been initialized using the
 // body* temp = new body(*args) - syntax.
-body::~body() {
+Body::~Body() {
     nBodies--;
     auto it = std::find(Bodies.begin(), Bodies.end(), this);
     int index = it - Bodies.begin();
@@ -38,14 +37,14 @@ body::~body() {
     Bodies.erase(Bodies.begin() + index);
 }
 
-void body::disable() {
+void Body::disable() {
     massive = false;
     movable = false;
 }
 
 // Calculates the acceleration of the "calling body" at any given
 // point in space X.
-vec3D body::compute_acceleration(vec3D X) {
+vec3D Body::compute_acceleration(vec3D X) {
     vec3D diff;
     diff = X - position;
     double dist = diff.norm();
@@ -58,9 +57,9 @@ vec3D body::compute_acceleration(vec3D X) {
 // Has to act on a "new" vec3D (called pos) because it is called multiple
 // times with different arguments (others than just "this.position") in the
 // solvers.
-vec3D body::sum_acceleration(vec3D pos) {
+vec3D Body::sum_acceleration(vec3D pos) {
     vec3D A(0.0, 0.0, 0.0);
-    for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+    for (std::vector<Body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         if ((*p)->massive && (*p) != this) {
             vec3D temp = (*p)->compute_acceleration(pos);
             A = A + temp;
@@ -71,8 +70,8 @@ vec3D body::sum_acceleration(vec3D pos) {
 
 // Performs a single step for the "calling body" under the influence
 // of the body "other" in the argument.
-void body::step_sgl(double dt, body other, std::string algo /*= "rkf2"*/) {
-    auto temp = std::bind(&body::compute_acceleration, other, std::placeholders::_1);
+void Body::step_sgl(double dt, Body other, std::string algo /*= "rkf2"*/) {
+    auto temp = std::bind(&Body::compute_acceleration, other, std::placeholders::_1);
     if (algo == "rk4") {
         solver::runge_kutta_4(this->position, this->velocity, dt, temp);
     } else if (algo == "rkf1") {
@@ -86,8 +85,8 @@ void body::step_sgl(double dt, body other, std::string algo /*= "rkf2"*/) {
 
 // Performs a single step for the "calling body" under the influence
 // of ALL other bodys in the system.
-void body::step(double dt, std::string algo /*= "rkf2"*/) {
-    auto temp = std::bind(&body::sum_acceleration, this, std::placeholders::_1);
+void Body::step(double dt, std::string algo /*= "rkf2"*/) {
+    auto temp = std::bind(&Body::sum_acceleration, this, std::placeholders::_1);
     if (algo == "rk4") {
         solver::runge_kutta_4(this->position, this->velocity, dt, temp);
     } else if (algo == "rkf1") {
@@ -100,15 +99,15 @@ void body::step(double dt, std::string algo /*= "rkf2"*/) {
 }
 
 // Performs a whole system step obeying massive and movable boolean members of the bodies.
-void body::sys_step(double dt, std::string algo /*= "rkf2"*/) {
+void Body::sys_step(double dt, std::string algo /*= "rkf2"*/) {
     // Fist: Storing new positions based on body::sum_acceleration in a vector for all
     // movable bodies.
     std::vector<vec3D> posPost;
-    for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+    for (std::vector<Body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         if ((*p)->movable) {
             vec3D posTemp = (*p)->position;
 
-            auto temp = std::bind(&body::sum_acceleration, (*p), std::placeholders::_1);
+            auto temp = std::bind(&Body::sum_acceleration, (*p), std::placeholders::_1);
 
             if (algo == "rk4") {
                 solver::runge_kutta_4(posTemp, (*p)->velocity, dt, temp);
@@ -124,7 +123,7 @@ void body::sys_step(double dt, std::string algo /*= "rkf2"*/) {
     }
     // Second: Updating the positions of the bodies all at once.
     auto pos = posPost.begin();
-    for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+    for (std::vector<Body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         if ((*p)->movable) {
             (*p)->position = (*pos);
             pos = std::next(pos, 1);
@@ -133,11 +132,11 @@ void body::sys_step(double dt, std::string algo /*= "rkf2"*/) {
 }
 
 // Printing an overview over the bodies currently in the system.
-void body::print_bodies() {
+void Body::print_bodies() {
     std::cout << "----------" << std::endl;
     std::cout << "ALL BODIES" << std::endl;
     std::cout << "----------" << std::endl;
-    for (std::vector<body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
+    for (std::vector<Body*>::iterator p = Bodies.begin(); p != Bodies.end(); ++p) {
         std::cout << (*p)->name << ", "
                   << "is movable: " << (*p)->movable << std::endl;
     }
@@ -146,7 +145,7 @@ void body::print_bodies() {
 
 // Simulating a given amount of years with given step size (in day-fractions).
 // Directly outputting the results to a file with given name.
-void body::simulation(double stepSize, double nYear, std::string fileName /*"data.csv"*/) {
+void Body::simulation(double stepSize, double nYear, std::string fileName /*"data.csv"*/) {
     // Open file
     std::ofstream outdata;
     outdata.open(fileName);  // opens the file
@@ -162,17 +161,17 @@ void body::simulation(double stepSize, double nYear, std::string fileName /*"dat
     std::cout << "Progress:" << std::endl;
     std::cout << "[";
     for (int step = 0; step <= nSteps; step++) {
-        for (std::vector<body*>::iterator p = Bodies.begin(); p != std::prev(Bodies.end()); ++p) {
+        for (std::vector<Body*>::iterator p = Bodies.begin(); p != std::prev(Bodies.end()); ++p) {
             outdata << (*p)->position.x << ","
                     << (*p)->position.y << ","
                     << (*p)->position.z << ",";
         }
         // Last object has to be included without final " , " to prevent data column full of " ".
-        body* last = Bodies.back();
+        Body* last = Bodies.back();
         outdata << last->position.x << ","
                 << last->position.y << ","
                 << last->position.z << std::endl;
-        body::sys_step(stepSize);
+        Body::sys_step(stepSize);
         // std::cout << step << std::endl; /* Debugging */
         if ((double)step / (double)nSteps >= (double)progress * 0.1) {
             std::cout << "#";

@@ -1,14 +1,11 @@
 // Main CPP-File for creating orbital simulations of multibody systems.
-// Currently leads to compiler problems with g++ as updated via MSYS2 because of the vector.push_back problem: https://stackoverflow.com/questions/69773877/getting-throw-bad-array-new-lengthv-when-trying-to-use-stdvectorpush-back
-// Using g++ 8.3.0, gdb 10.1 from Rtools mingw64 works (set up January 29, 2022).
 #include <math.h>
-
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
-//#include "core/Body.h"
+// Custom files
 #include "core/body.h"
 #include "core/convSys.h"
 #include "core/solver.h"
@@ -27,14 +24,13 @@ int main() {
     const double EARTH_VY0 = -30300.0;
     const double EARTH_MASS = 5.972e24;
     const double EARTH_RADIUS = 6371000.0;
-    // const double dt = 1. / (double)stepsPerDay;  // 1 earth day = 86400.0 seconds
 
     //--------------------------------------------------------------------------------
     // Initializing the bodies of the system:
     // Sun 1
-    vec3D Pos1(0.0, 0.0, 0.0);
-    vec3D Vel1(0.0, 0.0, 0.0);
-    body sun(Pos1, Vel1, 1, SUN_RADIUS, "Sun", "generic", true, true);
+    vec3D pos1(0.0, 0.0, 0.0);
+    vec3D vel1(0.0, 0.0, 0.0);
+    Body sun(pos1, vel1, 1, SUN_RADIUS, "Sun", "generic", true, true);
 
     // Sun 2
     // vec3D Pos1(1.0, 0.0, 0.0);
@@ -49,29 +45,29 @@ int main() {
     // Earth
     vec3D Pos2(-149598022960., 0., 0.);
     vec3D Vel2(0., -29290., 0.);
-    body earth(Pos2, Vel2, EARTH_MASS, 6371000.0, "Earth", "SI", true, true);
+    Body earth(Pos2, Vel2, EARTH_MASS, 6371000.0, "Earth", "SI", true, true);
 
     // Moon
     vec3D Pos3(-149598022960. - 383397000., 0., 0.);
     vec3D Vel3(0., -29290. - 1023., 0.);
-    body moon(Pos3, Vel3, EARTH_MASS / 81.3, 1., "Moon", "SI", true, true);
+    Body moon(Pos3, Vel3, EARTH_MASS / 81.3, 1., "Moon", "SI", true, true);
 
     //--------------------------------------------------------------------------------
     // Running Simulation
     double stepSize = 0.005;
     double nYear = 2;
-    body::simulation(stepSize, nYear);
+    Body::simulation(stepSize, nYear);
 
     //--------------------------------------------------------------------------------
     // Print Bodies
-    body::print_bodies();
+    Body::print_bodies();
 
-    // Debugging info
+    //Final Info and Prints
     cout << "-----------" << endl;
-    cout << "Ver. 0.0026" << endl;
+    cout << "Ver. 0.0027" << endl;
     cout << "-----------" << endl;
-    // cout << "Press any key to close the application." << endl;
-    // cin.ignore();
-    // Test
+    cout << "Press any key to close the application." << endl;
+    cin.ignore();
+
     return 0;
 }
