@@ -14,6 +14,11 @@
 
 using namespace std;
 
+void wait() {
+    cout << "Press any key to go on." << endl;
+    cin.ignore();
+}
+
 int main() {
     //--------------------------------------------------------------------------------
     // Declaring some SI-Constants (deprecated):
@@ -28,6 +33,10 @@ int main() {
 
 
 
+    vec3D test;
+    test.set_values(1, 1, 1);
+    cout << test << endl;
+
 
 
     // Sun 1
@@ -38,11 +47,10 @@ int main() {
     // Earth
     vec3D Pos2(-149598022960., 0., 0.);
     vec3D Vel2(0., -29290., 0.);
+    cout << Vel2 << endl;
     Body earth(Pos2, Vel2, EARTH_MASS, 6371000.0, "Earth", "SI", true, true);
 
     earth.print_bodies();
-    cout << "Press any key to close the application." << endl;
-    cin.ignore();
 
 
     // Initialize System
@@ -110,8 +118,7 @@ int main() {
     cout << "" << endl;
     cout << "Ver. 0.0028" << endl;
     cout << "-----------" << endl;
-    cout << "Press any key to close the application." << endl;
-    cin.ignore();
+    wait();
 
     return 0;
 }

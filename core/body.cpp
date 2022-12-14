@@ -162,15 +162,15 @@ void Body::simulation(double stepSize, double nYear, std::string fileName /*"dat
     std::cout << "[";
     for (int step = 0; step <= nSteps; step++) {
         for (std::vector<Body*>::iterator p = Bodies.begin(); p != std::prev(Bodies.end()); ++p) {
-            outdata << (*p)->position.x << ","
-                    << (*p)->position.y << ","
-                    << (*p)->position.z << ",";
+            outdata << (*p)->position.x1 << ","
+                    << (*p)->position.x2 << ","
+                    << (*p)->position.x3 << ",";
         }
         // Last object has to be included without final " , " to prevent data column full of " ".
         Body* last = Bodies.back();
-        outdata << last->position.x << ","
-                << last->position.y << ","
-                << last->position.z << std::endl;
+        outdata << last->position.x1 << ","
+                << last->position.x2 << ","
+                << last->position.x3 << std::endl;
         Body::sys_step(stepSize);
         // std::cout << step << std::endl; /* Debugging */
         if ((double)step / (double)nSteps >= (double)progress * 0.1) {

@@ -12,15 +12,18 @@ class vec3D {
 
 // Everything is public. Nothing needs to be hidden here.
   public:
-    double x;
-    double y;
-    double z;
+    double x1;
+    double x2;
+    double x3;
 
     // Default Construcor
     vec3D();
 
     // Custom Constructor:
     vec3D(double x1, double x2, double x3);
+
+    // Setting fixed numbers
+    void set_values(double x1, double x2, double x3);
 
     // Overloading << operator for std::ostream
     friend std::ostream& operator<<(std::ostream& os, const vec3D& vec);
