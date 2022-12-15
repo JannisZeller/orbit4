@@ -7,13 +7,15 @@
 
 // Custom files
 #include "core/body.h"
-#include "core/convSys.h"
+#include "core/conversionsystem.h"
 #include "core/solver.h"
 #include "core/vec3D.h"
 #include "core/system.h"
 
+// Using the std-namespace (only in main)
 using namespace std;
 
+// Function for waiting for key input
 void wait_for_key() {
     cout << "Press any key to go on." << endl;
     cin.ignore();
@@ -21,102 +23,48 @@ void wait_for_key() {
 
 
 int main() {
-    //--------------------------------------------------------------------------------
-    // Declaring some SI-Constants (deprecated):
-    const double SUN_MASS = 1.989e30;
-    const double SUN_RADIUS = 695700000.0;
-    const double EARTH_X0 = -147095000000.0;
-    const double EARTH_Y0 = 0.0;
-    const double EARTH_VX0 = 0.0;
-    const double EARTH_VY0 = -30300.0;
-    const double EARTH_MASS = 5.972e24;
-    const double EARTH_RADIUS = 6371000.0;
 
+    // Placeholder variables
+    vec3D x;
+    vec3D y;
+    ConversionSystem<double> consys;
 
-
-
-
-    
-
-    // Sun 1
-    vec3D pos1(0.0, 0.0, 0.0);
-    vec3D vel1(0.0, 0.0, 0.0);
-    Body sun(pos1, vel1, 1, SUN_RADIUS, "Sun", "generic", true, true);
+    // Sun
+    Body sun(
+        x, y, 
+        consys.sun_mass, 
+        consys.sun_radius, 
+        "Sun", "SI", true, true);
 
     // Earth
-    vec3D pos2(-149598022960., 0., 0.);
-    vec3D vel2(0., -29290., 0.);
-    Body earth(pos2, vel2, EARTH_MASS, 6371000.0, "Earth", "SI", true, true);
+    x.set_values(-consys.earth_x0, 0, 0);
+    y.set_values(0, -consys.earth_v0, 0);
+    Body earth(
+        x, y, 
+        consys.earth_mass,
+        consys.earth_radius,
+        "Earth", "SI", true, true);
+
+    // Earth
+    x.set_values(-consys.earth_x0 - consys.moon_x0, 0, 0);
+    y.set_values(0, -consys.earth_v0 - consys.moon_v0, 0);
+    Body moon(
+        x, y, 
+        consys.earth_mass,
+        consys.earth_radius,
+        "Earth", "SI", true, true);
 
     // Initialize System
     System sys;
-    // sys.add_body(earth);
-    // sys.add_body(sun);
-    // sys.print_bodies();
-
-
-
-    // cout << earth.position << endl;
-    // for (int step = 0; step <= 180; step++) {
-    //     sys.step(1.);
-    // }
 
     // Running Simulation
-    double step_size = 1;
-    double n_year = 1;
-    sys.simulate(step_size, n_year);
-
-    cout << earth.position << endl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //--------------------------------------------------------------------------------
-    // Initializing the bodies of the system:
-    // Sun 1
-    // vec3D pos1(0.0, 0.0, 0.0);
-    // vec3D vel1(0.0, 0.0, 0.0);
-    // Body sun(pos1, vel1, 1, SUN_RADIUS, "Sun", "generic", true, true);
-
-    // // Sun 2
-    // // vec3D Pos1(1.0, 0.0, 0.0);
-    // // vec3D Vel1(0.0, 0.01, 0.0);
-    // // body sun2(Pos1, Vel1, 0.01, SUN_RADIUS, "Sun", "generic", true, true);
-
-    // // Mecury
-    // // Pos << -46000000000.0, 0.0, 0.0;
-    // // Vel << 0.0, -58980.0, 0;
-    // // Body mercury(Pos, Vel, 0.33011e24, 2439700., "Mercury", "SI", true, true);
-
-    // // Earth
-    // vec3D Pos2(-149598022960., 0., 0.);
-    // vec3D Vel2(0., -29290., 0.);
-    // Body earth(Pos2, Vel2, EARTH_MASS, 6371000.0, "Earth", "SI", true, true);
-
-    // // Moon
-    // vec3D Pos3(-149598022960. - 383397000., 0., 0.);
-    // vec3D Vel3(0., -29290. - 1023., 0.);
-    // Body moon(Pos3, Vel3, EARTH_MASS / 81.3, 1., "Moon", "SI", true, true);
-
-
+    double step_size = 0.01;
+    double n_year    = 1;
+    sys.simulate(step_size, n_year, "data.csv", "rk4");
 
     //Final Info and Prints
     cout << "" << endl;
-    cout << "Ver. 0.0029" << endl;
+    cout << "Ver. 0.0031" << endl;
     cout << "-----------" << endl;
     wait_for_key();
 

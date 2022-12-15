@@ -12,7 +12,7 @@
 #include <vector>
 
 // Customs
-#include "convSys.h"
+#include "conversionsystem.h"
 #include "solver.h"
 #include "vec3D.h"
 #include "body.h"
@@ -46,7 +46,7 @@ class System {
     // Print all Bodies in the system
     void print_bodies();
 
-    // Perform a simulation
+    // Perform a simulation (step_size is in earth-days.)
     void simulate(double step_size, double n_year, std::string of_name = "data.csv", std::string algo = "rkf2");
 };
 

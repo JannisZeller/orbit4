@@ -12,7 +12,7 @@
 #include <vector>
 
 // Customs
-#include "convSys.h"
+#include "conversionsystem.h"
 #include "solver.h"
 #include "vec3D.h"
 
@@ -29,16 +29,13 @@ class Body {
     double radius;
     bool massive;
     bool movable;
-
+    double G = ConversionSystem<double>::G_generic;
+    
     static std::vector<Body*> all_bodies; 
     static int n_bodies;
 
-    // conversion to [L] = AU, [T] = EarthDay and [m] = Sunmass
-    double G = 6.67430e-11 / pow(149597870700.0, 3) * pow(86400.0, 2) * 1.98847e30;
-    // For the computations carried out when simulating the system, it is sensefull to not use the "really small" and "rally big" values which we would have when using SI-units.
-
     // Constructor defining initial position, velocity, mass, radius, name
-    Body(vec3D x, vec3D v, double m, double r, std::string name = "Default", std::string unitsystem = "SI", bool massive = true, bool movable = true);
+    Body(vec3D x, vec3D v, double m, double r, std::string name = "Default", std::string input_units = "SI", bool massive = true, bool movable = true);
 
     // Disable the body so it does not play a role in the mortion anymore
     void disable();

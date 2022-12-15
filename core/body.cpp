@@ -6,7 +6,7 @@ int Body::n_bodies;
 
 
 // Constructor defining initial position, velocity, mass, radius, name
-Body::Body(vec3D x, vec3D v, double m, double r, std::string name /*= "Default"*/, std::string unitsystem /*= "SI"*/, bool massive /*= true*/, bool movable /*= true*/) {
+Body::Body(vec3D x, vec3D v, double m, double r, std::string name /*= "Default"*/, std::string input_units /*= "SI"*/, bool massive /*= true*/, bool movable /*= true*/) {
     this->name = name;
     this->massive = massive;
     this->movable = movable;
@@ -16,18 +16,18 @@ Body::Body(vec3D x, vec3D v, double m, double r, std::string name /*= "Default"*
     n_bodies++;
 
     // If unit system is already generic ([L]=AU, [T]=EarthDays, [M]=SunMasses), just take them:
-    if (unitsystem == "generic") {
+    if (input_units == "generic") {
         position = x;
         velocity = v;
         mass = m;
         radius = r;
     }
     // Otherwise convert to generic unit system:
-    else if (unitsystem == "SI") {
-        position = convSys<vec3D>::lenConv(x);
-        velocity = convSys<vec3D>::velConv(v);
-        mass = convSys<double>::massConv(m);
-        radius = convSys<double>::lenConv(r);
+    else if (input_units == "SI") {
+        position = ConversionSystem<vec3D>::convert_length(x);
+        velocity = ConversionSystem<vec3D>::convert_velocity(v);
+        mass     = ConversionSystem<double>::convert_mass(m);
+        radius   = ConversionSystem<double>::convert_length(r);
     }
 }
 

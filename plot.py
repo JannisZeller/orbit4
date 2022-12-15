@@ -143,13 +143,13 @@ class PlotTraj:
 
 
 # %%
-data = pd.read_csv("data.csv", sep=",", header=None)
+data = pd.read_csv("./bin/data.csv", sep=",", header=None)
 
 
 # %%
 ## Extract Moon relative to earth
 dataEarth = data.iloc[:, 3:6]
-dataMoon = data.iloc[:, 6:9]
+dataMoon  = data.iloc[:, 6:9]
 dataMoonRel = pd.DataFrame(dataMoon.values - dataEarth.values)
 
 # %%
@@ -169,5 +169,3 @@ if ANIMATE is True:
         NRows=1000,
         filename="Test.gif",
     )
-
-# %%

@@ -18,6 +18,7 @@ void Solver::runge_kutta_4(vec3D& x, vec3D& v, double dt, std::function<vec3D(ve
     v = v + dt * (k1v + 2. * k2v + 2. * k3v + k4v) / 6.;
 }
 
+
 // Runge-Kutta-Fehlberg 4(5)-th order with alpha2=1/3 (Fehlberg, 1969, p. 12)
 void Solver::runge_kutta_fehlberg1(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f) {
     vec3D k1v = f(x);
@@ -35,6 +36,7 @@ void Solver::runge_kutta_fehlberg1(vec3D& x, vec3D& v, double dt, std::function<
     x = x + dt * (47. / 450. * k1x + 0. * k2x + 12. / 25. * k3x + 32. / 255. * k4x + 1. / 30. * k5x + 6. / 25. * k6x);
     v = v + dt * (47. / 450. * k1v + 0. * k2v + 12. / 25. * k3v + 32. / 255. * k4v + 1. / 30. * k5v + 6. / 25. * k6v);
 }
+
 
 // Runge-Kutta-Fehlberg 4(5)-th order with alpha2=3/8 (Fehlberg, 1969, p. 13)
 void Solver::runge_kutta_fehlberg2(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f) {
