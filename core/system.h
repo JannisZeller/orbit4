@@ -36,11 +36,9 @@ class System {
     // Load multiple Bodies from a csv
     // void load_from_csv();
 
-    // Add a single body
+    // Add a single body (needed if bodies are created after the system is
+    // initialized)
     void add_body(Body& body);
-
-    // Compute Acceleration for a single body based on other bodies
-    // vec3D compute_acceleration_at_for(vec3D position, Body& body);
 
     // Simulate a single step
     void step(double dt, std::string algo = "rkf2");
@@ -49,7 +47,7 @@ class System {
     void print_bodies();
 
     // Perform a simulation
-    // void simulate(double stepSize, double nYear, std::string fileName = "data.csv");
+    void simulate(double step_size, double n_year, std::string of_name = "data.csv", std::string algo = "rkf2");
 };
 
 #endif

@@ -1,10 +1,16 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
+// Standard Libraries
 #include <functional>
 
+// Customs
 #include "vec3D.h"
 
+// Solver
+// ------
+// Solver is a class for integrating 3 dimensional equations of motion with 
+// acceleration function f.
 // The different algorithms implemented in this class assume dx/dt=f(x) with no
 // explicit time dependency of f.
 // Coefficents used can be found in:
@@ -17,7 +23,7 @@
 // to implement x and v explicitely would be to use a new class with 6-dim vectors, which then can be
 // used directly with the algorithms.
 
-class solver {
+class Solver {
    public:
     // Runge-Kutta 4th Order functional:
     static void runge_kutta_4(vec3D& x, vec3D& v, double dt, std::function<vec3D(vec3D)> f);
