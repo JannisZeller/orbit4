@@ -22,21 +22,23 @@ void System::add_body(Body& body) {
 
 
 // Simulate a single step
-void System::step(double dt, std::string algo /*= "rkf2"*/) {
+void System::step(double dt, std::string algo /*= "rk4"*/, double smooth) {
 
     // Fist: STORING new positions of movable bodies.
     std::vector<vec3D> new_positions;
+    std::vector<vec3D> new_velocities;
     for (std::vector<Body*>::iterator p = bodies.begin(); p != bodies.end(); ++p) {
         if ((*p)->movable) {
             vec3D new_position = (*p)->position;
+            vec3D new_velocity = (*p)->velocity;
 
             // Computing the total force on the body introduced by all other
             // massive bodies using a lambda-function.
-            auto acceleration_function = [this, p](vec3D x) {
-                vec3D a(0.0, 0.0, 0.0);
+            auto acceleration_function = [this, p, smooth](vec3D x) {
+                vec3D a(0., 0., 0.);
                 for (std::vector<Body*>::iterator other = bodies.begin(); other != bodies.end(); ++other) {
                     if ((*other)->massive && other != p) {
-                        vec3D da = (*other)->compute_gravity_at(x);
+                        vec3D da = (*other)->compute_gravity_at(x, smooth); // Smoothing factor = minimal distance (in AU) between bodies assumed. 
                         a = a + da;
                     }
                 }
@@ -44,25 +46,24 @@ void System::step(double dt, std::string algo /*= "rkf2"*/) {
             };
 
             // Actually calling the integration methods for the movement:
-            if (algo == "rk4") {
-                Solver::runge_kutta_4(new_position, (*p)->velocity, dt, acceleration_function);
-            } else if (algo == "rkf1") {
-                Solver::runge_kutta_fehlberg1(new_position, (*p)->velocity, dt, acceleration_function);
-            } else if (algo == "rkf2") {
-                Solver::runge_kutta_fehlberg2(new_position, (*p)->velocity, dt, acceleration_function);
-            } else {
-                throw std::invalid_argument("Algorithm for update rule in body::sys_step not defined/available!");
-            }
-            new_positions.push_back(new_position);
+            if      (algo ==  "rk4") {Solver::runge_kutta_4(        new_position, new_velocity, dt, acceleration_function);} 
+            else if (algo == "rkf1") {Solver::runge_kutta_fehlberg1(new_position, new_velocity, dt, acceleration_function);} 
+            else if (algo == "rkf2") {Solver::runge_kutta_fehlberg2(new_position, new_velocity, dt, acceleration_function);}
+            else {throw std::invalid_argument("Algorithm for update rule in body::sys_step not defined/available!");}
+            new_positions.push_back( new_position);
+            new_velocities.push_back(new_velocity);
         }
     }
 
-    // Second: UPDATING the positions of the bodies all at once.
+    // Second: UPDATING the positions and velocities of the bodies all at once.
     auto current_position = new_positions.begin();
+    auto current_velocity = new_velocities.begin();
     for (std::vector<Body*>::iterator p = bodies.begin(); p != bodies.end(); ++p) {
         if ((*p)->movable) {
             (*p)->position = (*current_position);
             current_position = std::next(current_position, 1);
+            (*p)->velocity = (*current_velocity);
+            current_velocity = std::next(current_velocity, 1);
         }
     }
 }
@@ -81,7 +82,7 @@ void System::print_bodies() {
 
 
 // Perform a simulation
-void System::simulate(double step_size, double n_year, std::string of_name /*"data.csv"*/, std::string algo /*"rkf2"*/) {
+void System::simulate(double step_size, double n_year, std::string of_name /*"data.csv"*/, std::string algo /*"rk4"*/, double smooth /*=0*/) {
 
     // Open file
     std::ofstream outdata;
@@ -110,7 +111,7 @@ void System::simulate(double step_size, double n_year, std::string of_name /*"da
                 << last->position.x3 << std::endl;
 
         // Performing one integration step
-        this->step(step_size, algo);
+        this->step(step_size, algo, smooth);
 
         // Displaying Progress
         // std::cout << iter << std::endl; /* Debugging */

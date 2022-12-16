@@ -83,8 +83,8 @@ vec3D operator-(const double scalar, const vec3D& vec) {
 
 
 // Norm for length of vector
-double vec3D::norm() {
-    return (sqrt(x1 * x1 + x2 * x2 + x3 * x3));
+double vec3D::norm_sq() {
+    return (x1 * x1 + x2 * x2 + x3 * x3);
 }
 
 

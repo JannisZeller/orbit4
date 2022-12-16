@@ -49,7 +49,7 @@ class vec3D {
     friend vec3D operator-(const double scalar, const vec3D& vec);
 
     // Norm for length of vector
-    double norm();
+    double norm_sq();
 
     // Dot or scalar product
     double dot(vec3D& other);

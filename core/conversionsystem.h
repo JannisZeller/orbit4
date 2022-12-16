@@ -19,23 +19,29 @@ class ConversionSystem {
     // Set of useful constants
     // - - - - - - - - - - - -
     // Sun 
-    static double constexpr sun_radius = 695700000;
-    static double constexpr sun_mass   = 1.98847e30; //!
+    static double constexpr sun_radius = 695700000.;
+    static double constexpr sun_mass   = 1.98847e+30; //!
     // Earth
-    static double constexpr earthday     = 86400; //!
-    static double constexpr earth_x0     = 149597870700; //!
-    static double constexpr earth_v0     = 30300;
-    static double constexpr earth_mass   = 5.972e24;
-    static double constexpr earth_radius = 6371000;
+    static double constexpr earthday     = 86400.; //!
+    static double constexpr earth_x0     = 149597870700.; //!
+    static double constexpr earth_v0     = 29290.;
+    static double constexpr earth_mass   = 5.972e+24;
+    static double constexpr earth_radius = 6371000.;
     // Mercury
-    static double constexpr mercury_x0 = 46000000000;
-    static double constexpr mercury_v0 = 58980;
+    static double constexpr mercury_x0   = 46000000000.;
+    static double constexpr mercury_v0   = 58980.;
+    static double constexpr mercury_mass = 3.285e+23;
+    // Mars
+    static double constexpr mars_x0   = 227987154947.;
+    static double constexpr mars_v0   = 27070.;
+    static double constexpr mars_mass = 6.39004e+23;
     // Moon (Relative to Earth)
-    static double constexpr moon_x0 = 383397000;
-    static double constexpr moon_v0 = 1023;
+    static double constexpr moon_x0   = 383397000.;
+    static double constexpr moon_v0   = 1023.;
+    static double constexpr moon_mass = 7.3456e+22;
     // Gravity Constant
     static double constexpr G_SI      = 6.67430e-11;
-    static double constexpr G_generic = G_SI / pow(earth_x0, 3) * pow(earthday, 2) * sun_mass;
+    static double constexpr G_generic = 0.0002959211565456235; // G_SI / pow(earth_x0, 3) * pow(earthday, 2) * sun_mass;
 
     // Convert Lengths
     static T convert_length(const T x);

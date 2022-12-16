@@ -27,8 +27,6 @@ class System {
   public:
     std::vector<Body*> bodies;  
     int n_bodies;
-    // conversion to [L] = AU, [T] = EarthDay and [m] = Sunmass
-    double G = 6.67430e-11 / pow(149597870700.0, 3) * pow(86400.0, 2) * 1.98847e30;
 
     // Constructor
     System();
@@ -41,13 +39,13 @@ class System {
     void add_body(Body& body);
 
     // Simulate a single step
-    void step(double dt, std::string algo = "rkf2");
+    void step(double dt, std::string algo="rk4", double smooth=0);
 
     // Print all Bodies in the system
     void print_bodies();
 
     // Perform a simulation (step_size is in earth-days.)
-    void simulate(double step_size, double n_year, std::string of_name = "data.csv", std::string algo = "rkf2");
+    void simulate(double step_size, double n_year, std::string of_name="data.csv", std::string algo ="rk4", double smooth=0);
 };
 
 #endif

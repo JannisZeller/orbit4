@@ -11,7 +11,7 @@ T ConversionSystem<T>::convert_length(const T x) {
 // Convert Velocities
 template <typename T>
 T ConversionSystem<T>::convert_velocity(const T v) {
-    return v * ConversionSystem::earthday / ConversionSystem::earth_x0;
+    return ConversionSystem::earthday / ConversionSystem::earth_x0 * v;
 }
 
 

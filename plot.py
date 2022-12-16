@@ -15,18 +15,12 @@ ANIMATE = True
 class PlotTraj:
     def __init__(
         self,
-        namesBodies,
-        massBodies,
-        radBodies,
         df: pd.DataFrame,
         noBodies=None,
         noSimSteps=None,
         colors=None,
     ) -> None:
 
-        self.namesBodies = namesBodies
-        self.massBodies = massBodies
-        self.radBodies = radBodies
         self.df = df
 
         if noBodies is None:
@@ -123,7 +117,7 @@ class PlotTraj:
                     ax.plot(xHist, yHist, zHist, c=self.colors[no % 10])
                 ax.scatter(
                     xArr[3 * no],
-                    xArr[3 * no + 1],
+ # type: ignore                    xArr[3 * no + 1],
                     xArr[3 * no + 2],
                     c=self.colors[no % 10],
                 )  # self.colors[no%10]
@@ -147,16 +141,32 @@ data = pd.read_csv("./bin/data.csv", sep=",", header=None)
 
 
 # %%
+fullSystem = PlotTraj(data)
+fullSystem.static_plot(setmax=False, NRows=None, sunPosi=False)
+
+
+# %%
+## Relative Coordinates
+dataEarth = data.iloc[:, 0:3]
+dataMoon  = data.iloc[:, 3:6]
+dataMoonRel = pd.DataFrame(dataMoon.values - dataEarth.values)
+AnimSys = PlotTraj(dataMoonRel)
+AnimSys.static_plot(setmax=False, NRows=None, sunPosi=False)
+
+
+
+# %%
 ## Extract Moon relative to earth
 dataEarth = data.iloc[:, 3:6]
 dataMoon  = data.iloc[:, 6:9]
 dataMoonRel = pd.DataFrame(dataMoon.values - dataEarth.values)
-
-# %%
 AnimSys = PlotTraj(
     ["Earth", "Moon"], [1, 1], [1, 1], dataMoonRel
 )  # data.iloc[:, 3:9] (only last 2 bodies)
 AnimSys.static_plot(setmax=False, NRows=None, sunPosi=False)
+
+
+
 
 
 # %%
