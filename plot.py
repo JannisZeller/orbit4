@@ -155,6 +155,16 @@ AnimSys.static_plot(setmax=False, NRows=None, sunPosi=False)
 
 
 
+
+
+
+
+
+
+
+
+
+
 # %%
 ## Extract Moon relative to earth
 dataEarth = data.iloc[:, 3:6]

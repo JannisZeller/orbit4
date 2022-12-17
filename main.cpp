@@ -35,10 +35,11 @@ int main() {
 
     // Earth
     x.set_values(consys.earth_x0, 0, 0);
-    y.set_values(
-        0, 
-        consys.earth_v0 - mass_ratio * consys.moon_v0*cos(tilt), 
-        - mass_ratio * consys.moon_v0*sin(tilt));
+    // y.set_values(
+    //     0, 
+    //     consys.earth_v0 - mass_ratio * consys.moon_v0*cos(tilt), 
+    //     - mass_ratio * consys.moon_v0*sin(tilt));
+    y.set_values(0, consys.earth_v0, 0);
     Body earth(
         x, y, 
         consys.earth_mass,
@@ -52,6 +53,13 @@ int main() {
         consys.moon_mass,
         "Moon", "SI", true, true);
 
+
+    cout << "Testing" << endl;
+    cout << earth.compute_gravity_at(moon.position, 0) << endl;
+    cout << moon.position << endl;
+    cout << "Testing" << endl;
+
+
     // Sun
     x.set_values(0, 0, 0);
     y.set_values(0, 0, 0);
@@ -60,13 +68,13 @@ int main() {
         consys.sun_mass, 
         "Sun", "SI", true, true);
 
-    // // Mars
-    // x.set_values(consys.mars_x0, 0, 0);
-    // y.set_values(0, consys.mars_v0, 0);
-    // Body mars(
-    //     x, y, 
-    //     consys.mars_mass,
-    //     "Mars", "SI", true, true);
+    // Mars
+    x.set_values(consys.mars_x0, 0, 0);
+    y.set_values(0, consys.mars_v0, 0);
+    Body mars(
+        x, y, 
+        consys.mars_mass,
+        "Mars", "SI", true, true);
 
 
         
@@ -75,9 +83,9 @@ int main() {
     sys.print_bodies();
 
     // Running Simulation
-    double step_size = 0.1;
+    double step_size = 0.05;
     double n_year    = 1.;
-    sys.simulate(step_size, n_year, "./data.csv", "rkf2", 1e-6);
+    sys.simulate(step_size, n_year, "./data.csv", "rkf2", 1e-20);
 
     //Final Info and Prints
     cout << "" << endl;

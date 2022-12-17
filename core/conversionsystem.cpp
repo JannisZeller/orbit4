@@ -18,7 +18,7 @@ T ConversionSystem<T>::convert_velocity(const T v) {
 // Convert Masses
 template <typename T>
 T ConversionSystem<T>::convert_mass(const T m) {
-    return m / ConversionSystem::sun_mass;
+    return m / ConversionSystem::earth_mass;
 }
 
 template class ConversionSystem<int>;

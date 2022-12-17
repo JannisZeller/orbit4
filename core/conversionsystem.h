@@ -41,7 +41,7 @@ class ConversionSystem {
     static double constexpr moon_mass = 7.3456e+22;
     // Gravity Constant
     static double constexpr G_SI      = 6.67430e-11;
-    static double constexpr G_generic = 0.0002959211565456235; // G_SI / pow(earth_x0, 3) * pow(earthday, 2) * sun_mass;
+    static double constexpr G_generic = 8.887441836640551e-10; // 0.0002959211565456235; // G_SI / earth_x0**3 * earthday**2 * earth_mass;
 
     // Convert Lengths
     static T convert_length(const T x);

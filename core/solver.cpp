@@ -1,5 +1,4 @@
 #include "solver.h"
-#include <math.h>
 
 
 // Runge-Kutta 4th Order functional:

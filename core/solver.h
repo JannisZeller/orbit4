@@ -3,6 +3,7 @@
 
 // Standard Libraries
 #include <functional>
+#include <math.h>
 
 // Customs
 #include "vec3D.h"
