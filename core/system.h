@@ -16,6 +16,7 @@
 #include "solver.h"
 #include "vec3D.h"
 #include "body.h"
+#include "state.h"
 
 // System
 // ------

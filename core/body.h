@@ -15,6 +15,7 @@
 #include "conversionsystem.h"
 #include "solver.h"
 #include "vec3D.h"
+#include "state.h"
 
 // vec3D
 // -----
@@ -23,8 +24,7 @@
 class Body {
   public:
     std::string name;
-    vec3D position;
-    vec3D velocity;
+    State state;
     double mass;
     bool massive;
     bool movable;

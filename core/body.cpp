@@ -17,14 +17,14 @@ Body::Body(vec3D x, vec3D v, double m, std::string name /*= "Default"*/, std::st
 
     // If unit system is already generic ([L]=AU, [T]=EarthDays, [M]=SunMasses), just take them:
     if (input_units == "generic") {
-        position = x;
-        velocity = v;
+        this->state = State(x, v);
         mass = m;
     }
     // Otherwise convert to generic unit system:
     else if (input_units == "SI") {
-        position = ConversionSystem<vec3D>::convert_length(x);
-        velocity = ConversionSystem<vec3D>::convert_velocity(v);
+        this->state = State(
+            ConversionSystem<vec3D>::convert_length(x), 
+            ConversionSystem<vec3D>::convert_velocity(v));
         mass     = ConversionSystem<double>::convert_mass(m);
     }
 }
@@ -40,7 +40,7 @@ void Body::disable() {
 // Compute the gravity force that this body introduces at space-point x
 vec3D Body::compute_gravity_at(vec3D x, double smooth) {
     vec3D diff;
-    diff = x - this->position;
+    diff = x - this->state.position;
     double dist_to_the_ = pow(diff.norm_sq() + smooth, -3./2.);
     return -G * mass * dist_to_the_ * diff;
 }
