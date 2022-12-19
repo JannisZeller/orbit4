@@ -51,7 +51,7 @@ int main() {
     Body moon(
         x, y, 
         consys.moon_mass,
-        "Moon", "SI", true, true);
+        "Moon", "SI", false, true);
     // Sun
     x.set_values(0, 0, 0);
     y.set_values(0, 0, 0);
@@ -68,8 +68,8 @@ int main() {
 
     // Running Simulation
     double step_size = 0.01;
-    double n_year    = 1;
-    sys.simulate(step_size, n_year, "./data.csv", "rk4", 0);
+    double n_year    = 2;
+    sys.simulate(step_size, n_year, "./data.csv", "rkf2", 0);
 
 
     //Final Info and Prints

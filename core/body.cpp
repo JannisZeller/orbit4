@@ -6,7 +6,7 @@ int Body::n_bodies;
 
 
 // Constructor defining initial position, velocity, mass, radius, name
-Body::Body(vec3D x, vec3D v, double m, std::string name /*= "Default"*/, std::string input_units /*= "SI"*/, bool massive /*= true*/, bool movable /*= true*/) {
+Body::Body(vec3D x, vec3D v, double mass, std::string name /*= "Default"*/, std::string input_units /*= "SI"*/, bool massive /*= true*/, bool movable /*= true*/) {
     this->name = name;
     this->massive = massive;
     this->movable = movable;
@@ -18,14 +18,14 @@ Body::Body(vec3D x, vec3D v, double m, std::string name /*= "Default"*/, std::st
     // If unit system is already generic ([L]=AU, [T]=EarthDays, [M]=SunMasses), just take them:
     if (input_units == "generic") {
         this->state = State(x, v);
-        mass = m;
+        this->mass = mass;
     }
     // Otherwise convert to generic unit system:
     else if (input_units == "SI") {
         this->state = State(
             ConversionSystem<vec3D>::convert_length(x), 
             ConversionSystem<vec3D>::convert_velocity(v));
-        mass     = ConversionSystem<double>::convert_mass(m);
+        this->mass = ConversionSystem<double>::convert_mass(mass);
     }
 }
 
@@ -41,6 +41,7 @@ void Body::disable() {
 vec3D Body::compute_gravity_at(vec3D x, double smooth) {
     vec3D diff;
     diff = x - this->state.position;
-    double dist_to_the_ = pow(diff.norm_sq() + smooth, -3./2.);
-    return -G * mass * dist_to_the_ * diff;
+    double exp = -1.5;
+    double dist_to_the_exp = pow(diff.norm_sq() + smooth, exp);
+    return -G * mass * dist_to_the_exp * diff;
 }

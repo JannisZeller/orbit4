@@ -8,7 +8,7 @@ void Solver::runge_kutta_4(State& state, double dt, std::function<State(State)> 
     State k2 = dt * f(state + 1./2. * k1);
     State k3 = dt * f(state              + 1./2. * k2);
     State k4 = dt * f(state                           +         k3);
-    state =           state + 1./6. * k1 + 2./6. * k2 + 2./6. * k3 + 1./6. * k4;
+    state =           state + 1./6. * k1 + 1./3. * k2 + 1./3. * k3 + 1./6. * k4;
 }
 
 

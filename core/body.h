@@ -34,7 +34,7 @@ class Body {
     static int n_bodies;
 
     // Constructor defining initial position, velocity, mass, radius, name
-    Body(vec3D x, vec3D v, double m, std::string name = "Default", std::string input_units = "SI", bool massive = true, bool movable = true);
+    Body(vec3D x, vec3D v, double mass, std::string name = "Default", std::string input_units = "SI", bool massive = true, bool movable = true);
 
     // Disable the body so it is not relevant for the system anymore
     void disable();
