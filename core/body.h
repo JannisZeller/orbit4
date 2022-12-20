@@ -25,22 +25,22 @@ class Body {
   public:
     std::string name;
     State state;
-    double mass;
+    long double mass;
     bool massive;
     bool movable;
-    double G = ConversionSystem<double>::G_generic;
+    long double G = ConversionSystem<long double>::G_generic;
     
     static std::vector<Body*> all_bodies; 
     static int n_bodies;
 
     // Constructor defining initial position, velocity, mass, radius, name
-    Body(vec3D x, vec3D v, double mass, std::string name = "Default", std::string input_units = "SI", bool massive = true, bool movable = true);
+    Body(vec3D x, vec3D v, long double mass, std::string name = "Default", std::string input_units = "SI", bool massive = true, bool movable = true);
 
     // Disable the body so it is not relevant for the system anymore
     void disable();
 
     // Compute the gravity force that this body introduces at space-point x
-    vec3D compute_gravity_at(vec3D x, double smooth);
+    vec3D compute_gravity_at(vec3D x, long double smooth);
 };
 
 #endif

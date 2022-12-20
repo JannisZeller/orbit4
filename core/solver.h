@@ -28,13 +28,13 @@ class Solver {
 
    public:
     // Runge-Kutta 4th Order functional:
-    static void runge_kutta_4(State& state, double dt, std::function<State(State)> f);
+    static void runge_kutta_4(State& state, long double dt, std::function<State(State)> f);
 
     // Runge-Kutta-Fehlberg 4(5)-th order method (Fehlberg, 1969, p. 12)
-    static void runge_kutta_fehlberg1(State& state, double dt, std::function<State(State)> f);
+    static void runge_kutta_fehlberg1(State& state, long double dt, std::function<State(State)> f);
 
     // Runge-Kutta-Fehlberg 4(5)-th order method with coefficients from D. Sarafyan
-    static void runge_kutta_fehlberg2(State& state, double dt, std::function<State(State)> f);
+    static void runge_kutta_fehlberg2(State& state, long double dt, std::function<State(State)> f);
 };
 
 #endif

@@ -23,4 +23,5 @@ T ConversionSystem<T>::convert_mass(const T m) {
 
 template class ConversionSystem<int>;
 template class ConversionSystem<double>;
+template class ConversionSystem<long double>;
 template class ConversionSystem<vec3D>;

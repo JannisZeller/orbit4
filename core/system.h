@@ -40,13 +40,13 @@ class System {
     void add_body(Body& body);
 
     // Simulate a single step
-    void step(double dt, std::string algo="rk4", double smooth=0);
+    void step(long double dt, std::string algo="rk4", long double smooth=0);
 
     // Print all Bodies in the system
     void print_bodies();
 
     // Perform a simulation (step_size is in earth-days.)
-    void simulate(double step_size, double n_year, std::string of_name="data.csv", std::string algo ="rk4", double smooth=0);
+    void simulate(long double step_size, long double n_year, std::string of_name="data.csv", std::string algo ="rk4", long double smooth=0);
 };
 
 #endif

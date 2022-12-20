@@ -2,7 +2,7 @@
 
 
 // Runge-Kutta 4th Order functional:
-void Solver::runge_kutta_4(State& state, double dt, std::function<State(State)> f) {
+void Solver::runge_kutta_4(State& state, long double dt, std::function<State(State)> f) {
     // Iteravly applying RK4 algorithm for x and v:
     State k1 = dt * f(state);
     State k2 = dt * f(state + 1./2. * k1);
@@ -13,7 +13,7 @@ void Solver::runge_kutta_4(State& state, double dt, std::function<State(State)> 
 
 
 // Runge-Kutta-Fehlberg 4(5)-th order method (Fehlberg, 1969, p. 12)
-void Solver::runge_kutta_fehlberg1(State& state, double dt, std::function<State(State)> f) {
+void Solver::runge_kutta_fehlberg1(State& state, long double dt, std::function<State(State)> f) {
     State k1 = dt * f(state);
     State k2 = dt * f(state +  2./9.   * k1);
     State k3 = dt * f(state +  1./12.  * k1 +   1./ 4.  * k2);
@@ -25,7 +25,7 @@ void Solver::runge_kutta_fehlberg1(State& state, double dt, std::function<State(
 
 
 // Runge-Kutta-Fehlberg 4(5)-th order method with coefficients from D. Sarafyan
-void Solver::runge_kutta_fehlberg2(State& state, double dt, std::function<State(State)> f) {
+void Solver::runge_kutta_fehlberg2(State& state, long double dt, std::function<State(State)> f) {
     State k1 = dt * f(state);
     State k2 = dt * f(state +    1./4.    * k1);
     State k3 = dt * f(state +    3./32.   * k1 +    9./ 32.  * k2         );

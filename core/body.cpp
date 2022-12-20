@@ -6,7 +6,7 @@ int Body::n_bodies;
 
 
 // Constructor defining initial position, velocity, mass, radius, name
-Body::Body(vec3D x, vec3D v, double mass, std::string name /*= "Default"*/, std::string input_units /*= "SI"*/, bool massive /*= true*/, bool movable /*= true*/) {
+Body::Body(vec3D x, vec3D v, long double mass, std::string name /*= "Default"*/, std::string input_units /*= "SI"*/, bool massive /*= true*/, bool movable /*= true*/) {
     this->name = name;
     this->massive = massive;
     this->movable = movable;
@@ -25,7 +25,7 @@ Body::Body(vec3D x, vec3D v, double mass, std::string name /*= "Default"*/, std:
         this->state = State(
             ConversionSystem<vec3D>::convert_length(x), 
             ConversionSystem<vec3D>::convert_velocity(v));
-        this->mass = ConversionSystem<double>::convert_mass(mass);
+        this->mass = ConversionSystem<long double>::convert_mass(mass);
     }
 }
 
@@ -38,10 +38,13 @@ void Body::disable() {
 
 
 // Compute the gravity force that this body introduces at space-point x
-vec3D Body::compute_gravity_at(vec3D x, double smooth) {
+vec3D Body::compute_gravity_at(vec3D x, long double smooth) {
     vec3D diff;
     diff = x - this->state.position;
-    double exp = -1.5;
-    double dist_to_the_exp = pow(diff.norm_sq() + smooth, exp);
+    long double exp = -1.5;
+    long double dist_to_the_exp = pow(diff.norm_sq() + smooth, exp);
     return -G * mass * dist_to_the_exp * diff;
+    // long double dist = diff.norm_sq() + smooth;
+    // long double log_ = std::log(G) + std::log(mass) - 1.5*std::log(dist);
+    // return -1. * std::exp(log_) * diff;
 }

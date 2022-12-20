@@ -19,13 +19,13 @@ class State {
     State();
 
     // Custom Constructor:
-    State(double x1, double x2, double x3, 
-          double v1, double v2, double v3);
+    State(long double x1, long double x2, long double x3, 
+          long double v1, long double v2, long double v3);
     State(vec3D x, vec3D v);
     
     // Setting fixed numbers
-    void set_values(double x1, double x2, double x3, 
-                    double v1, double v2, double v3);
+    void set_values(long double x1, long double x2, long double x3, 
+                    long double v1, long double v2, long double v3);
     void set_values(vec3D x, vec3D v);
 
     // Overloading << operator for std::ostream
@@ -33,23 +33,23 @@ class State {
 
     // Overloading * operator
     State operator*(const State& other);
-    friend State operator*(const State& vec, double scalar);
-    friend State operator*(double scalar, const State& vec);
+    friend State operator*(const State& vec, long double scalar);
+    friend State operator*(long double scalar, const State& vec);
 
     // Overloading / operator
     State operator/(const State& other);
-    friend State operator/(const State& vec, double scalar);
-    friend State operator/(double scalar, const State& vec);
+    friend State operator/(const State& vec, long double scalar);
+    friend State operator/(long double scalar, const State& vec);
 
     // Overloading + operator
     State operator+(const State& other);
-    friend State operator+(const State& vec, const double scalar);
-    friend State operator+(const double scalar, const State& vec);
+    friend State operator+(const State& vec, const long double scalar);
+    friend State operator+(const long double scalar, const State& vec);
 
     // Overloading - operator
     State operator-(const State& other);
-    friend State operator-(const State& vec, const double scalar);
-    friend State operator-(const double scalar, const State& vec);  
+    friend State operator-(const State& vec, const long double scalar);
+    friend State operator-(const long double scalar, const State& vec);  
 };
 
 #endif

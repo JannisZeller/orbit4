@@ -9,8 +9,8 @@ State::State() {
 
 
 // Custom Constructor:
-State::State(double x1, double x2, double x3, 
-             double v1, double v2, double v3) {
+State::State(long double x1, long double x2, long double x3, 
+             long double v1, long double v2, long double v3) {
     this->position = vec3D(x1, x2, x3);
     this->velocity = vec3D(v1, v2, v3);
 }
@@ -21,8 +21,8 @@ State::State(vec3D x, vec3D v) {
 
 
 // Setting fixed numbers
-void State::set_values(double x1, double x2, double x3, 
-                        double v1, double v2, double v3) {
+void State::set_values(long double x1, long double x2, long double x3, 
+                        long double v1, long double v2, long double v3) {
     this->position = vec3D(x1, x2, x3);
     this->velocity = vec3D(v1, v2, v3);
 }
@@ -49,10 +49,10 @@ State State::operator*(const State& other) {
     State res(position * other.position, velocity * other.velocity);
     return (res);
 }
-State operator*(const State& vec, const double scalar) {
+State operator*(const State& vec, const long double scalar) {
     return State(scalar * vec.position, scalar * vec.velocity);
 }
-State operator*(const double scalar, const State& vec) {
+State operator*(const long double scalar, const State& vec) {
     return State(scalar * vec.position, scalar * vec.velocity);
 }
 
@@ -62,10 +62,10 @@ State State::operator/(const State& other) {
     State res(position / other.position, velocity / other.velocity);
     return (res);
 }
-State operator/(const State& vec, const double scalar) {
+State operator/(const State& vec, const long double scalar) {
     return State(vec.position / scalar, vec.velocity / scalar);
 }
-State operator/(const double scalar, const State& vec) {
+State operator/(const long double scalar, const State& vec) {
     return State(scalar / vec.position, scalar / vec.velocity);
 }
 
@@ -74,10 +74,10 @@ State operator/(const double scalar, const State& vec) {
 State State::operator+(const State& other) {
     return State(position + other.position, velocity + other.velocity);
 }
-State operator+(const State& vec, const double scalar) {
+State operator+(const State& vec, const long double scalar) {
     return State(scalar + vec.position, scalar + vec.velocity);
 }
-State operator+(const double scalar, const State& vec) {
+State operator+(const long double scalar, const State& vec) {
     return State(scalar + vec.position, scalar + vec.velocity);
 }
 
@@ -86,10 +86,10 @@ State operator+(const double scalar, const State& vec) {
 State State::operator-(const State& other) {
     return State(position - other.position, velocity - other.velocity);
 }
-State operator-(const State& vec, const double scalar) {
+State operator-(const State& vec, const long double scalar) {
     return State(scalar - vec.position, scalar - vec.velocity);
 }
-State operator-(const double scalar, const State& vec) {
+State operator-(const long double scalar, const State& vec) {
     return State(scalar - vec.position, scalar - vec.velocity);
 }
 

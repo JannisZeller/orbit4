@@ -22,7 +22,7 @@ void System::add_body(Body& body) {
 
 
 // Simulate a single step
-void System::step(double dt, std::string algo /*= "rk4"*/, double smooth) {
+void System::step(long double dt, std::string algo /*= "rk4"*/, long double smooth) {
 
     // 1. Initializing new-states containerr
     std::vector<State> new_states;
@@ -72,12 +72,12 @@ void System::print_bodies() {
         std::cout << (*p)->name << ", "
                   << "is movable: " << (*p)->movable << std::endl;
     }
-    std::cout << "Number of Bodies: " << bodies.size() << std::endl;
+    std::cout << "Number of Bodies: " << bodies.size() << "\n" << std::endl;
 }
 
 
 // Perform a simulation
-void System::simulate(double step_size, double n_year, std::string of_name /*"data.csv"*/, std::string algo /*"rk4"*/, double smooth /*=0*/) {
+void System::simulate(long double step_size, long double n_year, std::string of_name /*"data.csv"*/, std::string algo /*"rk4"*/, long double smooth /*=0*/) {
 
     // Open file
     std::ofstream outdata;
@@ -110,7 +110,7 @@ void System::simulate(double step_size, double n_year, std::string of_name /*"da
 
         // Displaying Progress
         // std::cout << iter << std::endl; /* Debugging */
-        if ((double)iter / (double)n_steps >= (double)progress * 0.1) {
+        if ((long double)iter / (long double)n_steps >= (long double)progress * 0.1) {
             std::cout << "#";
             progress++;
         }
